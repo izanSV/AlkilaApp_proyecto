@@ -1,0 +1,158 @@
+﻿<ContentPage
+    x:Class="AlkilaApp.VistaProductos"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="True" Title="Menú principal">
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="idCerrarSesionClicked" IconImageSource="cerrar_sesion.png" Clicked="CerrarSesionClicked"/>
+    </ContentPage.ToolbarItems>
+
+
+    <ContentPage.Content>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <CollectionView x:Name="TiposProductoCollectionView" Grid.Row="0">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame HasShadow="True" Padding="5" Margin="15" BackgroundColor="AliceBlue" CornerRadius="5"
+                             HorizontalOptions="Start">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCollectionViewItemTapped"/>
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Label Text="{Binding}" HorizontalOptions="Center" VerticalOptions="Center"
+                           TextColor="Black" FontSize="20"/>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Colección de productos -->
+
+
+            <Label Grid.Row="1" Text="EXPLORA LOS PRODUCTOS DE OTROS USUARIOS" FontSize="Subtitle" Margin="10" TextColor="DarkGrey"/>
+
+
+            <CollectionView x:Name="ProductosCollectionView" Margin="0,40,0,100" Grid.Row="2">
+                    <CollectionView.ItemsLayout>
+                        <!-- Utiliza un GridLayout con dos elementos por fila -->
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Plantilla para cada elemento de la lista -->
+                            <Grid Margin="2">
+                                <!-- Frame principal con TapGestureRecognizer -->
+                                <Frame x:Name="CartaVistaProductos" HasShadow="True" Padding="0" Margin="5" HeightRequest="240" WidthRequest="180" Background="AliceBlue">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnCardTapped"/>
+                                    </Frame.GestureRecognizers>
+
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Image Grid.Row="0"
+                                            Source="{Binding Foto}"
+                                            Aspect="AspectFill"
+                                            HeightRequest="200"
+                                            WidthRequest="180"/>
+
+                                        <StackLayout Grid.Row="1" VerticalOptions="Start" Margin="0,50,0,0">
+                                            <Grid>
+                                                <!-- Etiqueta de Precio -->
+                                                <Label Text="{Binding Precio, StringFormat=' {0:F2} € /dia'}" HorizontalTextAlignment="Start" Padding="10,0,0,0" TextColor="LightGrey" FontSize="12" BackgroundColor="#1C375C"/>
+
+                                                <!-- Etiqueta de Valoración con iconos -->
+                                            <Label Text="{Binding Valoracion, StringFormat=' {0:F2}⭐'}" FontAttributes="Italic" HorizontalOptions="End" VerticalOptions="Center" TextColor="White" Padding="0,0,10,0" Margin="0,0,10,0" FontSize="12">
+
+                                            </Label>
+                                            </Grid>
+                                            <Label Text="{Binding Nombre}" Margin="10,0,0,0" HorizontalTextAlignment="Start" Padding="0" TextColor="#1C375C"/>
+                                            <Label Margin="10,0,20,5" HorizontalTextAlignment="End" Padding="3" TextColor="#1C375C">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding EstaAlquilado}" Value="True">
+                                                        <Setter Property="Text" Value="Alquilado" />
+                                                        <Setter Property="TextColor" Value="Purple"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding EstaAlquilado}" Value="False">
+                                                        <Setter Property="Text" Value="Disponible" />
+                                                        <Setter Property="TextColor" Value="CornflowerBlue"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+
+            <Grid Grid.Row="3" HorizontalOptions="FillAndExpand" VerticalOptions="End" BackgroundColor="White" Margin="0" Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                    <!-- Primera fila -->
+                    <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                        <ImageButton x:Name="idVistaPrincipalClicked" Source="home.png" WidthRequest="40" HeightRequest="40" Clicked="VistaPrincipalClicked"
+                                HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Text="Inicio" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+                    </StackLayout>
+
+                    <!-- Segunda fila -->
+                    <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                        <ImageButton x:Name="idAnyadirProductoClicked" Source="add.png" WidthRequest="40" HeightRequest="40" Clicked="AnyadirProductoClicked"
+                                HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Text="Añadir p." HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+                    </StackLayout>
+
+                    <!-- Tercera fila -->
+                    <StackLayout Grid.Row="0" Grid.Column="2" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                        <ImageButton x:Name="idMostrarDatosUsuarioClicked" Source="user.png" WidthRequest="40" HeightRequest="40" Clicked="MostrarDatosUsuarioClicked"
+                                HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Text="Usuario" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+                    </StackLayout>
+
+                    <!-- Cuarta fila -->
+               
+                    <StackLayout Grid.Row="0" Grid.Column="3" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                        <ImageButton x:Name="idMisAlquileresClicked" Source="alquiler.png" WidthRequest="40" HeightRequest="40" Clicked="MisAlquileresClicked"
+                                 HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Text="P. alquilados" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+                    </StackLayout>
+
+            </Grid>
+
+        </Grid>
+
+    </ContentPage.Content>
+
+    
+</ContentPage>

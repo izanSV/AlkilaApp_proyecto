@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlkilaApp.AlquilarProducto"
+             Title="Alquilar producto">
+
+    <Grid BackgroundColor="Transparent"
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Título -->
+        <StackLayout Grid.Row="0" HorizontalOptions="Center">
+            <Label Margin="20"
+                   Text="Rango de fechas"
+                   FontSize="40"
+                   FontFamily="Helvetica"
+                   TextColor="#1C375C"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"/>
+        </StackLayout>
+
+        <!-- Selecciona la fecha de recogida -->
+        <StackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" Margin="10,0,10,40">
+            <Label Text="Selecciona la fecha de recogida del producto:" FontSize="Small"/>
+            <DatePicker x:Name="FechaInicio" FontSize="Large" HorizontalOptions="FillAndExpand" TextColor="#1C375C" FontAttributes="Bold"/>
+        </StackLayout>
+
+        <!-- Selecciona la fecha de devolución -->
+        <StackLayout Grid.Row="2" HorizontalOptions="FillAndExpand" Margin="10,0,10,40">
+            <Label Text="Selecciona la fecha de devolución del producto:" FontSize="Small" />
+            <DatePicker x:Name="FechaFin" FontSize="Large" HorizontalOptions="FillAndExpand" TextColor="#1C375C" FontAttributes="Bold"/>
+        </StackLayout>
+
+        
+        
+        <StackLayout  Grid.Row="3" HorizontalOptions="FillAndExpand" Margin="20" >
+            <Label x:Name="DiasTotalesLabel" Text="🫣 Dias totales: 0 " FontSize="Medium" TextColor="DarkGray"/>
+        </StackLayout>
+
+
+        <StackLayout Grid.Row="4"  Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+
+
+
+            <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand"  BorderColor="#1C375C">
+                <Label x:Name="CostoAlquilerLabel" Text="0,0 €"/>
+
+            </Frame>
+
+        </StackLayout>
+
+        <StackLayout Grid.Row="5" HorizontalOptions="FillAndExpand" Margin="10" >
+            <Button x:Name="btnLeerCondicion" Text="Terminos y condiciones 📝" HeightRequest="60"  Clicked="BtnLeerCondiciones" Margin="20" BackgroundColor="#1C375C">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <!-- Define los cambios en el botón cuando está presionado -->
+
+                                    <Setter Property="Scale" Value="0.9" />
+                                    <!-- Por ejemplo, puedes cambiar el color de fondo -->
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+
+        </StackLayout>
+
+        <StackLayout Grid.Row="6" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="10" VerticalOptions="Center">
+            <CheckBox x:Name="checkBox" CheckedChanged="CheckBox_CheckedChanged"/>
+            <Label Text="Aceptar términos y condiciones" VerticalOptions="Center"/>
+        </StackLayout>
+
+       
+
+
+        <Grid Grid.Row="7" HorizontalOptions="FillAndExpand" VerticalOptions="End" BackgroundColor="White" Margin="0" Padding="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+
+
+
+            <!-- Tercera fila -->
+            <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton x:Name="imgBtnGuardar" Source="key.png" WidthRequest="40" HeightRequest="40" Clicked="GuardarDatosClicked"
+            HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Alquilar" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+            </StackLayout>
+
+            <!-- Cuarta fila -->
+            <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="cancel.png" WidthRequest="40" HeightRequest="40" Clicked="CancelarDatosClicked" 
+            HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Cancelar" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+            </StackLayout>
+        </Grid>
+
+
+    </Grid>
+
+</ContentPage>

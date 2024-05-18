@@ -1,0 +1,25 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlkilaApp.Vistas.VentanaModalEmpresa" Background="#1C375C">
+
+    
+    <StackLayout Margin="30">
+
+        <Frame BackgroundColor="WhiteSmoke" CornerRadius="30">
+            <StackLayout>
+
+                <Label Text="INTRODUCIR NÚMERO DE IDENTIFICACIÓN FISCAL DE LA EMPRESA" FontSize="Title" FontAttributes="Bold" TextColor="#1C375C" HorizontalOptions="Center" Margin="0,20,0,0"/>
+                <Image Source="enterprise.png" Margin="20"/>
+                <Entry x:Name="campo1" Placeholder="Introduce el NIF de tu empresa" Margin="30"/>
+                <StackLayout HorizontalOptions="Center">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Button Text="Válidar"  BackgroundColor="LightGray" TextColor="DarkGreen" Clicked="ComprobarNifClicked" Margin="20"/>
+                        <Button Text="Salir" BackgroundColor="LightGray" TextColor="DarkRed" Clicked="SalirClicked" Margin="20"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout></Frame>
+
+        <Image x:Name="miImagen" Source="dotnet_bot.png" Margin="-300,-40,-110,0" HeightRequest="40"/>
+
+    </StackLayout>
+</ContentPage>

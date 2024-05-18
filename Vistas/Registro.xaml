@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AlkilaApp.Registro"
+    NavigationPage.HasNavigationBar="False">
+
+
+
+    <Grid
+          BackgroundColor="#1C375C"
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+
+        <Frame
+              Grid.Row="1"
+              Margin="20,0,20,-20"
+              BorderColor="#1C375C"
+              CornerRadius="50"
+              HasShadow="True"
+              HeightRequest="680">
+
+            <Grid
+                  Padding="20,0,20,0"
+                  HorizontalOptions="FillAndExpand"
+                  RowSpacing="20"
+                  VerticalOptions="FillAndExpand">
+
+                <Grid.RowDefinitions>
+
+                    <!--TODO Investigar mas sobre el RowDefinition -->
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+
+                </Grid.RowDefinitions>
+                
+
+                <Label
+                      Grid.Row="0"
+                      FontAttributes="Bold"
+                      FontSize="24"
+                      HorizontalOptions="CenterAndExpand"
+                      Text="Registrarse!"
+                      TextColor="#1C375C" />
+
+                <Label
+                      Grid.Row="1"                 
+                      HorizontalOptions="CenterAndExpand"
+                      Text="Iniciar sesión en mi cuenta"
+                      TextColor="#1C375C" />
+
+                <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Entry
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="👤 Nombre"
+                        x:Name="NombreEntry"
+                        VerticalOptions="FillAndExpand" />
+
+                    <Entry
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="👥 Apellidos"
+                        x:Name="ApellidoEntry"
+                        VerticalOptions="FillAndExpand" />
+                </StackLayout>
+
+                <Label
+                   Grid.Row="3"
+                   Text="🗓️ Introducir fecha de nacimiento"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center" />
+
+
+                <DatePicker
+                       Grid.Row="4"   
+                       BackgroundColor="AliceBlue"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       x:Name="DateEntry"/>
+                
+                <Entry
+                    Grid.Row="5"
+                    Placeholder="📩 E-mail" Margin="0,0,10,0"
+                    x:Name="CorreoElectronicoEntry"
+                    VerticalOptions="FillAndExpand" Keyboard="Email" />
+                
+                <Entry
+                        Grid.Row="6"  
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="📲 Teléfono"
+                        x:Name="TelefonoEntry"
+                        VerticalOptions="FillAndExpand"
+                        Keyboard="Telephone"/>
+                
+                <Entry
+                        Grid.Row="7"  
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="🔐 Contraseña"
+                        x:Name="ContrasenyaEntry"
+                        IsPassword="True"
+                        VerticalOptions="FillAndExpand"/>
+
+                <Entry
+                      Grid.Row="8"  
+                     HorizontalOptions="FillAndExpand"
+                     Placeholder="🔒 Repetir Contraseña"
+                     IsPassword="True"
+                      x:Name="RepContrasenyaEntry"
+                     VerticalOptions="FillAndExpand"/>
+
+
+                <Button x:Name="idEmpresaClicked"
+                       Grid.Row="9"
+                           BackgroundColor="Transparent"
+                           CornerRadius="20"
+                           Text="Eres empresario , pulse aquí 🎩" Clicked="EmpresaClicked" >
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" >
+
+                                    <VisualState.Setters>
+                                        <!-- Define los cambios en el botón cuando está presionado -->
+                                        <Setter Property="TextColor" Value="#1C375C"/>
+                                        <!-- Por ejemplo, puedes cambiar el color de fondo -->
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <!-- Define los cambios en el botón cuando está presionado -->
+                                        <Setter Property="TextColor" Value="Purple"/>
+                                        <Setter Property="Scale" Value="0.9" />
+                                        <!-- Por ejemplo, puedes cambiar el color de fondo -->
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
+
+
+                <Button
+                    x:Name="idRegistroUsuario"
+                    Grid.Row="10"
+                    BackgroundColor="#1C375C"
+                    CornerRadius="20"
+                    Margin="0,10,0,0"
+                    Text="Aceptar"
+                    Clicked="RegistroUsuarioClicked"/>
+                
+            </Grid>
+        </Frame>
+    </Grid>
+
+</ContentPage>

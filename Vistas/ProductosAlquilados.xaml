@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlkilaApp.Vistas.ProductosAlquilados"
+             Title="Productos Alquilados" BackgroundColor="#1C375C">
+
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="idInformacionEstadosClicked" IconImageSource="info.png" Clicked="InformacionEstadosClicked"/>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+
+        <Grid BackgroundColor="Transparent"
+       HorizontalOptions="FillAndExpand"
+       VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Colección de productos -->
+            <CollectionView x:Name="ProductosAlquiladosCollectionView"
+                              Grid.Row="0">
+
+                <CollectionView.ItemsLayout>
+                    <!-- Utiliza un GridLayout con dos elementos por fila -->
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+                        <!-- Plantilla para cada elemento de la lista -->
+                        <Grid Margin="2" HeightRequest="500">
+                            <!-- Frame principal con TapGestureRecognizer -->
+                            <Frame HasShadow="True" Padding="0" Margin="5" Background="AliceBlue">
+                                <Frame.GestureRecognizers>
+                                    <!-- Aquí puedes agregar el TapGestureRecognizer si lo necesitas -->
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Imagen del producto -->
+                                    <Image Source="{Binding FotoProductoAlquilado}" Aspect="AspectFill"  Background="#1C375C" Grid.Row="0" />
+
+                                    <!-- Elementos en la parte inferior -->
+                                    <StackLayout Grid.Row="1" Orientation="Vertical" Margin="5">
+                                        <!-- Id del producto -->
+                                        <Label Text="{Binding IdAlquiler}" HorizontalOptions="End" TextColor="Purple" FontSize="10"/>
+
+
+                                        <StackLayout Orientation="Horizontal" Margin="5">
+                                            <Label Text="Producto alquilador por: " HorizontalOptions="Start" FontSize="15" TextColor="DarkGray"/>
+                                            <Label Text="{Binding NombreUsuarioComprador}" HorizontalOptions="StartAndExpand" FontSize="15" TextColor="DarkGrey"/>
+                                        </StackLayout>
+
+                                        <!-- Texto "Producto:" y nombre del producto -->
+
+                                        <StackLayout Orientation="Horizontal" Margin="5">
+                                            <Label Text="Producto: " HorizontalOptions="Start" FontSize="Medium"/>
+                                            <Label Text="{Binding NombreProductoAlquilado}" HorizontalOptions="StartAndExpand" FontSize="Medium" />
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Horizontal" Margin="5">
+                                            <Label Text="Precio: " HorizontalOptions="Start" FontSize="Medium"/>
+                                            <Label Text="{Binding PrecioTotal}" HorizontalOptions="StartAndExpand" FontSize="Small" />
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Horizontal" Margin="5">
+                                            <Label Text="Fecha de entrega: " HorizontalOptions="Start" FontSize="10"/>
+                                            <Label Text="{Binding FechaFin, StringFormat='{0:dd/MM/yyyy}'}" HorizontalOptions="StartAndExpand" FontSize="10"/>
+                                        </StackLayout>
+
+                                        <!-- Estado del alquiler -->
+                                        <Label Text="{Binding EstadoAlquiler}" HorizontalTextAlignment="End" TextColor="#1C375C" Margin="10">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding EstadoAlquiler}" Value="Aceptado">
+                                                    <Setter Property="TextColor" Value="Green" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding EstadoAlquiler}" Value="Cancelado">
+                                                    <Setter Property="TextColor" Value="Red" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <!-- Indicator de carga -->
+            <Grid Grid.Row="0" VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Texto -->
+                <Label x:Name="textoEspera" HorizontalTextAlignment="Center" Text="Buscando registros" Margin="20" FontAttributes="Bold" FontSize="20" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+               
+                <!-- ActivityIndicator -->
+                <ActivityIndicator x:Name="circuloCarga" Color="White" HeightRequest="60" WidthRequest="60" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="1"/>
+                <Label x:Name="textoNoHayProductos" HorizontalTextAlignment="Center" TextColor="WhiteSmoke" Text="Actualmente no dispones de ningún producto en alquiler" FontAttributes="Bold" FontSize="20" VerticalOptions="End"/>
+            </Grid>
+
+            <Image x:Name="imgNoProductos" Source="dotnet_3.png" VerticalOptions="Start" HorizontalOptions="Center" Margin="20"/>
+        </Grid>
+ 
+    </ScrollView>
+
+
+ 
+
+</ContentPage>
+
+

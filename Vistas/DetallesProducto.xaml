@@ -1,0 +1,229 @@
+﻿<ContentPage
+    x:Class="AlkilaApp.DetallesProducto"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Detalle de productos">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="idWhatsappClicked" IconImageSource="whatsapp.png" Clicked="WhatsappClicked"/>
+    </ContentPage.ToolbarItems>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Contenido dentro del ScrollView -->
+  <ScrollView Grid.Row="0">
+    <StackLayout Spacing="20" Padding="20">
+
+                <Grid>
+
+                    <Image x:Name="FotoImage" Aspect="AspectFill"/>
+                    <Image x:Name="iconoEmpresa" Source="verified.png" WidthRequest="50" HeightRequest="50" Margin="20" HorizontalOptions="End" VerticalOptions="Start"/>
+                    <Frame BackgroundColor="LightGray" CornerRadius="60" WidthRequest="4000" Margin="10" Grid.Row="1" Grid.Column="1"
+                     HorizontalOptions="End" VerticalOptions="End" Opacity="0.5">
+                    
+                    <Label FontSize="16" Opacity="1" HorizontalOptions="End">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding EstaAlquilado}" Value="True">
+                                <Setter Property="Text" Value="Alquilado" />
+                                <Setter Property="TextColor" Value="Purple"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding EstaAlquilado}" Value="False">
+                                <Setter Property="Text" Value="Disponible" />
+                                <Setter Property="TextColor" Value="CornflowerBlue"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+
+                    </Frame>
+
+                </Grid>
+
+
+                <!-- Detalles del producto -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+
+
+                    <!-- Nombre y tipo del producto -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <!-- Nombre del producto -->
+                        <Label x:Name="NombreLabel" FontSize="Large" Grid.Column="0" Margin="10"/>
+
+                        <!-- Tipo del producto -->
+                        <Frame CornerRadius="10" BackgroundColor="AliceBlue" Margin="10" Padding="5" Grid.Column="1">
+                            <Label x:Name="TipoLabel" FontSize="Small" />
+                        </Frame>
+                    </Grid>
+
+                    <!-- Nombre del usuario -->
+                    <Grid Grid.Row="1" BackgroundColor="WhiteSmoke">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Nombre del usuario -->
+                        <Label x:Name="UsuarioLabel" FontSize="Small" VerticalOptions="Center" Grid.Column="0" HorizontalOptions="Start" TextColor="DarkGray" Margin="10"/>
+
+                        <!-- Foto del usuario -->
+                        <Frame CornerRadius="100" Margin="10" Grid.Column="1" HeightRequest="80" WidthRequest="80" HorizontalOptions="End">
+                            <!-- Imagen del usuario -->
+                            <Image x:Name="FotoLabel" Aspect="AspectFill"  HeightRequest="82" WidthRequest="82"/>
+                        </Frame>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <!-- Descripción del producto -->
+
+                        <StackLayout>
+                            <Label x:Name="DescripcionLabel" FontSize="Medium" Margin="10"/>
+                            <Label x:Name="PrecioLabel" FontSize="Large" Margin="0" HorizontalOptions="End" VerticalOptions="Start" TextColor="DarkGray"/>
+                        </StackLayout>
+                    </Grid>
+
+
+                    <!-- Abrir Google maps al presionar el Frame con el evento OnFrameTapped -->
+
+                    <Grid Grid.Row="3" Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+
+                        <StackLayout Orientation="Horizontal" Margin="20">
+                            <!-- Imagen a la izquierda -->
+                            <Image Source="googlemaps.png" Aspect="AspectFit" VerticalOptions="Center" WidthRequest="30" HeightRequest="30" Margin="0,0,20,0" />
+
+                            <!-- Texto a la derecha -->
+                            <Label Text="Mostrar ubicación con Google Maps:" VerticalOptions="Center" FontSize="15" />
+                        </StackLayout>
+
+
+
+                        <Frame BackgroundColor="Transparent" WidthRequest="800" HeightRequest="200" Grid.Row="1">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFrameTapped"/>
+                            </Frame.GestureRecognizers>
+                            <Frame.Content>
+                                <Grid WidthRequest="400" HeightRequest="200">
+                                    <!-- Imagen de fondo -->
+                                    <Image Source="mapa_button.jpg" WidthRequest="800" HeightRequest="800" Opacity="0.5"/>
+
+                                    <!-- Texto encima de la imagen -->
+                                    <Label x:Name="DatosUbicacionUsuario"
+                                           TextColor="DarkSlateGray"
+                                           FontSize="Subtitle"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Margin="20"
+                                           FontAttributes="Bold"
+                                           CharacterSpacing="4"/>
+                                </Grid>
+                            </Frame.Content>
+                        </Frame>
+                    </Grid>
+                    
+                    <Grid Grid.Row="4" Margin="5" >
+
+                        <StackLayout VerticalOptions="StartAndExpand" Orientation="Vertical">
+                            <Label Margin="5" x:Name="idDescAlquiler" FontSize="15" HorizontalOptions="Start" TextColor="DarkGray"/>
+                            <Label Margin="5" x:Name="idFechaFinAlquiler" FontSize="15" HorizontalOptions="Start" TextColor="Purple"/>
+                        </StackLayout>
+
+                    </Grid>
+                </Grid>
+
+               
+            </StackLayout>
+</ScrollView>
+
+        <!-- Botones al final de la página -->
+        <Grid Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="End" Margin="0" Padding="5" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Botón 1 con texto -->
+            <StackLayout Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,0,0" >
+                <Button x:Name="EditarButton" Text="Editar" TextColor="White" FontSize="Small" Margin="10" Opacity="1" Clicked="EditarButton_Clicked">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button">
+
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="Opacity" Value="0.5" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding UsuarioAutenticado}" Value="False">
+
+                            <Setter Property="IsEnabled" Value="True" />
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </StackLayout>
+
+            <!-- Botón 2 con texto -->
+            <StackLayout Grid.Column="1" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,0">
+
+                <Button x:Name="AlquilarButton"  Text="Alquilar" TextColor="White" FontSize="Small" Margin="10" Opacity="1" Clicked="AlquilarButton_Clicked">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding UsuarioAutenticado}" Value="True">
+
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="Opacity" Value="0.5" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding UsuarioAutenticado}" Value="False">
+
+                            <Setter Property="IsEnabled" Value="True" />
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+
+            </StackLayout>
+
+            <!-- Botón 3 con texto -->
+            <StackLayout Grid.Column="2" Orientation="Vertical" HorizontalOptions="End" VerticalOptions="Center">
+
+                <Button x:Name="EliminarButton" Text="Eliminar" TextColor="White" FontSize="Small" Margin="5" Opacity="1" Clicked="EliminarButton_Clicked">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding UsuarioAutenticado}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="Opacity" Value="0.5" />
+
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding UsuarioAutenticado}" Value="False">
+                            <Setter Property="IsEnabled" Value="True" />
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </StackLayout>
+
+        </Grid>
+    </Grid>
+</ContentPage>

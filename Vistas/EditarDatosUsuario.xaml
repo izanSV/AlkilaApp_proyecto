@@ -1,0 +1,320 @@
+﻿<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AlkilaApp.EditarDatosUsuario"
+    Title="Configuración del usuario">
+
+
+    <Grid BackgroundColor="Transparent"
+       HorizontalOptions="FillAndExpand"
+       VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+        <ScrollView>
+
+        <Grid Grid.Row="0" BackgroundColor="Transparent"
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- ScrollView para el contenido desplazable -->
+
+
+
+            <Grid Grid.Row="0" Padding="10,0,10,0"
+            HorizontalOptions="FillAndExpand"
+            RowSpacing="20"
+            VerticalOptions="FillAndExpand">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+
+                <StackLayout Orientation="Vertical"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand">
+
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Frame CornerRadius="200"
+                         HeightRequest="160"
+                         WidthRequest="160"
+                         Margin="5,10,0,40">
+
+                            <ImageButton x:Name="boton_foto_perfil"
+                                   Source="img.png"
+                                   Clicked="LogoEmpresa_Clicked"
+                                   HeightRequest="250"
+                                   WidthRequest="250"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="FillAndExpand" IsEnabled="False"/>
+                        </Frame>
+                    </StackLayout>
+
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <Label Text="👤 Nombre" />
+                        <Entry x:Name="NombreEntry" HorizontalOptions="FillAndExpand" Placeholder="Ingrese su nombre" IsEnabled="False"/>
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <Label Text="👥 Apellidos" />
+                        <Entry x:Name="ApellidoEntry" HorizontalOptions="FillAndExpand" Placeholder="Ingrese sus apellidos" IsEnabled="False"/>
+                    </StackLayout>
+
+                        <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                            <Label Text="👤 Telefono"/>
+                            <Entry x:Name="TelefonoEntry" HorizontalOptions="FillAndExpand" Placeholder="Ingrese su nombre" IsEnabled="False" Keyboard="Telephone" MaxLength="9"/>
+                        </StackLayout>
+
+
+                        <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <Label Text="🔒 Contraseña" />
+                        <Entry x:Name="ContrasenyaEntry" HorizontalOptions="FillAndExpand" Placeholder="Ingrese su contraseña" IsEnabled="False"  IsPassword="True"
+                               TextColor="PaleVioletRed"/>
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <Label Text="✉️ Correo Electrónico" />
+                        <Entry x:Name="CorreoElectronicoEntry" HorizontalOptions="FillAndExpand" Placeholder="Ingrese su correo electrónico" IsEnabled="False"
+                               TextColor="PaleVioletRed"/>
+                    </StackLayout>
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <Label Text="📅 Fecha de Nacimiento" />
+                            <DatePicker
+                       Grid.Row="4"   
+                       BackgroundColor="AliceBlue"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       x:Name="DateEntry" IsEnabled="False"/>
+                        </StackLayout>
+
+
+                    <!-- Barra lateral -->
+                    <StackLayout Grid.Column="1"
+                      BackgroundColor="#1C375C"
+                      WidthRequest="6"
+                      VerticalOptions="FillAndExpand"
+                      HorizontalOptions="End">
+                        <!-- Aquí puedes personalizar la barra lateral, como agregar un icono o texto -->
+                    </StackLayout>
+
+                </StackLayout>
+            </Grid>
+
+
+
+            <Grid Grid.Row="1" Padding="10,0,10,0"
+            HorizontalOptions="FillAndExpand"
+            RowSpacing="20"
+            VerticalOptions="FillAndExpand">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackLayout Orientation="Vertical"
+             HorizontalOptions="CenterAndExpand"
+             VerticalOptions="CenterAndExpand">
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <BoxView Color="Gray" HeightRequest="1" HorizontalOptions="FillAndExpand" Margin="10,5,10,5" />
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <Label Text="Registrar ubicación" FontSize="Subtitle"/>
+
+                    </StackLayout>
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <Label Text="🛣️ Calle, Parque, Escuela, Tiendas..."/>
+                        <Entry x:Name="CalleEntry" HorizontalOptions="FillAndExpand" Placeholder="Seleccionar calle, direcciones, lugares..." IsEnabled="False" Text="{Binding Calle}"/>
+                    </StackLayout>
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <Label Text="🌍 Localidad"/>
+                        <Entry x:Name="LocalidadEntry" HorizontalOptions="FillAndExpand" Placeholder="Seleccionar Ciudad" IsEnabled="False" Text="{Binding Localidad}"/>
+                    </StackLayout>
+
+
+
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Grid HorizontalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Botón izquierdo -->
+                            <Button x:Name="btnUbiReal" Grid.Column="0" Clicked="BtnUbicacionActual"
+                              BackgroundColor="#1C375C"
+                              Text="📍 Mi ubicación"
+                              VerticalOptions="Start"
+                              Margin="5"
+                              />
+
+                            <!-- Botón derecho -->
+                            <Button x:Name="btnComprUbica" Grid.Column="1" Clicked="BtnComprobarUbicacion"
+                              BackgroundColor="#1C375C"
+                              Text="✈️ Comprobar ubicación"
+                              VerticalOptions="End"
+                              Margin="5"/>
+                        </Grid>
+                    </StackLayout>
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="10">
+                        <BoxView Color="Gray" HeightRequest="1" HorizontalOptions="FillAndExpand" Margin="10,5,10,5" />
+                    </StackLayout>
+
+
+                    <!-- Barra lateral -->
+                    <StackLayout Grid.Column="1"
+                            BackgroundColor="#1C375C"
+                            WidthRequest="6"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="End">
+                        <!-- Aquí puedes personalizar la barra lateral, como agregar un icono o texto -->
+                    </StackLayout>
+
+                </StackLayout>
+            </Grid>
+
+
+            <Grid Grid.Row="2">
+                <Label Text="🛍️ Tú lista de productos " Grid.Row="0" FontSize="Medium" Margin="10"/>
+            </Grid>
+
+
+                <Grid Grid.Row="3" BackgroundColor="White">
+
+                    <Label x:Name="NoProductosLabel" Text="Todavía no tienes productos 🌜" FontSize="20" Margin="20" HorizontalTextAlignment="Start" Padding="0" TextColor="#1C375C"/>
+                    
+                    <!-- Colección de productos -->
+                    <CollectionView x:Name="ProductosCollectionView" Grid.Row="1">
+                        <CollectionView.ItemsLayout>
+                            <!-- Utiliza un GridLayout con dos elementos por fila -->
+                            <GridItemsLayout Orientation="Horizontal" Span="1" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Plantilla para cada elemento de la lista -->
+                                <Grid Margin="2">
+                                    <!-- Frame principal con TapGestureRecognizer -->
+                                    <Frame HasShadow="True" Padding="0" Margin="5" HeightRequest="240" WidthRequest="180" Background="AliceBlue">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnCardTapped"/>
+                                        </Frame.GestureRecognizers>
+
+
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Image Grid.Row="0"
+                                                    Source="{Binding Foto}"
+                                                    Aspect="AspectFill"
+                                                    HeightRequest="200"
+                                                    WidthRequest="180"/>
+
+                                            <StackLayout Grid.Row="1" VerticalOptions="Start" Margin="0,50,0,0">
+                                                <Grid>
+                                                    <!-- Etiqueta de Precio -->
+                                                    <Label Text="{Binding Precio, StringFormat=' {0:F2} € /dia'}" HorizontalTextAlignment="Start" Padding="10,0,0,0" TextColor="LightGrey" FontSize="12" BackgroundColor="#1C375C"/>
+
+                                                    <!-- Etiqueta de Valoración con iconos -->
+                                                    <Label Text="{Binding Valoracion, StringFormat=' {0:F2}⭐'}" FontAttributes="Italic" HorizontalOptions="End" VerticalOptions="Center" TextColor="White" Padding="0,0,10,0" Margin="0,0,10,0" FontSize="12">
+                                                    </Label>
+                                                </Grid>
+                                                <Label Text="{Binding Nombre}" Margin="10,0,0,0" HorizontalTextAlignment="Start" Padding="0" TextColor="#1C375C" />
+                                                <Label Margin="10,0,20,5" HorizontalTextAlignment="End" Padding="3" TextColor="#1C375C">
+                                                    <Label.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding EstaAlquilado}" Value="True">
+                                                            <Setter Property="Text" Value="Alquilado" />
+                                                            <Setter Property="TextColor" Value="Purple"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding EstaAlquilado}" Value="False">
+                                                            <Setter Property="Text" Value="Disponible" />
+                                                            <Setter Property="TextColor" Value="CornflowerBlue"/>
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+
+        </ScrollView>
+
+
+
+
+        <Grid Grid.Row="1" BackgroundColor="White" Margin="0" Padding="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Botón Guardar -->
+            <StackLayout Grid.Column="0" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="check.png" WidthRequest="40" HeightRequest="40" Clicked="GuardarDatosClicked"
+                    HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Guardar" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+            </StackLayout>
+
+            <!-- Botón Editar campos -->
+            <StackLayout Grid.Column="1" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="edit.png" WidthRequest="35" HeightRequest="35" Clicked="OnEditarCamposClicked"
+                    HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Editar campos" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+            </StackLayout>
+
+            <!-- Botón Cancelar -->
+            <StackLayout Grid.Column="2" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton Source="cancel.png" WidthRequest="40" HeightRequest="40" Clicked="CancelarDatosClicked" 
+                    HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Cancelar" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+            </StackLayout>
+
+
+           
+
+        </Grid>
+
+    </Grid>
+
+
+</ContentPage>
+
+    

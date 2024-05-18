@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AlkilaApp.AnyadirProductos"
+    Title="Productos">
+
+    
+
+    
+    <Grid BackgroundColor="Transparent"
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- Frame de datos del usuario -->
+        <ScrollView>
+
+
+            <Grid
+                  HorizontalOptions="FillAndExpand"
+                  
+                  VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackLayout Orientation="Vertical"
+                             HorizontalOptions="CenterAndExpand"
+                             VerticalOptions="CenterAndExpand">
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Frame CornerRadius="10" BackgroundColor="#1C375C"
+                               HeightRequest="400"
+                               WidthRequest="600"
+                               Margin="5,40,0,40">
+                            <ImageButton x:Name="boton_foto_perfil" Source="dotnet_bot.png" Clicked="LogoEmpresaClicked"  HeightRequest="540" WidthRequest="400"  HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand"/>
+                        </Frame>
+                    </StackLayout>
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="20">
+                        <Label Text="📦 Nombre" />
+                        <Entry x:Name="NombreEntry" HorizontalOptions="FillAndExpand" Placeholder="Ingrese su nombre" MaxLength="15"/>
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0">
+                        <Label Text="📜 Descripción" />
+                        <Editor x:Name="DescripcionEditor"
+                                HeightRequest="100" Placeholder="Detallanos tus ideas sobre este producto" BackgroundColor="AliceBlue"  Margin="20" Keyboard="Default"/>
+                    </StackLayout>
+
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand"  Margin="20">
+                        <Label Text="📦 Tipo de Producto"/>
+                        <Picker x:Name="TipoProductoPicker" HorizontalOptions="FillAndExpand" SelectedIndex="0"/>
+                    </StackLayout>
+
+
+
+
+                    <StackLayout HorizontalOptions="FillAndExpand"  Margin="20">
+                        <Label Text="🏷️ Precio por dia" />
+                        <Entry x:Name="PrecioEntry" HorizontalOptions="FillAndExpand" Placeholder="Ingrese el precio por dia" Keyboard="Numeric" MaxLength="7"/>
+                    </StackLayout>
+
+
+                    <!-- Barra lateral -->
+                    <StackLayout Grid.Column="1"
+                            BackgroundColor="#1C375C"
+                            WidthRequest="6"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="End">
+
+                    </StackLayout>
+
+                </StackLayout>
+            </Grid>
+
+        </ScrollView>
+
+        <Grid Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="End" BackgroundColor="White" Margin="0" Padding="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Primera fila -->
+            <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton x:Name="idGuardarClicked" Source="check.png" WidthRequest="40" HeightRequest="40" Clicked="GuardarClicked"
+            HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Guardar" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+            </StackLayout>
+
+            <!-- Segunda fila -->
+            <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton x:Name="idEditarClicked" Source="edit.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center" Clicked="EditarClicked"/>
+                <Label Text="Editar" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+            </StackLayout>
+
+            <!-- Tercera fila -->
+            <StackLayout Grid.Row="0" Grid.Column="2" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton x:Name="idCancelarClicked" Source="cancel.png" WidthRequest="40" HeightRequest="40" Clicked="CancelarClicked"
+            HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Cancelar" HorizontalOptions="Center" VerticalOptions="Center" Margin="10" FontSize="12"/>
+            </StackLayout>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

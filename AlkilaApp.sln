@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlkilaApp", "AlkilaApp.csproj", "{0AA78FF1-8123-4105-9FCC-AC2C65520E40}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlkilaAppTest", "..\TestProject1\AlkilaAppTest.csproj", "{5DFCCB0A-443D-472B-9EAA-FD6F3A85E78D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AA78FF1-8123-4105-9FCC-AC2C65520E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA78FF1-8123-4105-9FCC-AC2C65520E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA78FF1-8123-4105-9FCC-AC2C65520E40}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0AA78FF1-8123-4105-9FCC-AC2C65520E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA78FF1-8123-4105-9FCC-AC2C65520E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA78FF1-8123-4105-9FCC-AC2C65520E40}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5DFCCB0A-443D-472B-9EAA-FD6F3A85E78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DFCCB0A-443D-472B-9EAA-FD6F3A85E78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DFCCB0A-443D-472B-9EAA-FD6F3A85E78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DFCCB0A-443D-472B-9EAA-FD6F3A85E78D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {976C37DB-2BA1-456F-B745-B0B2DBEB24D3}
+	EndGlobalSection
+EndGlobal

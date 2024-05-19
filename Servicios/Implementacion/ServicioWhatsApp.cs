@@ -104,7 +104,7 @@ namespace AlkilaApp.Servicios.Implementacion
         /// <param name="telefonoDestinatario">El número de teléfono del destinatario del mensaje.</param>
         /// <param name="imagen">La URL de la foto a incluir en la plantilla.</param>
         /// <returns>La respuesta de la solicitud HTTP.</returns>
-        public async Task<HttpResponseMessage> EnviarPlantilla(string telefonoDestinatario, string imagen)
+        public async Task<HttpResponseMessage> EnviarPlantilla(string telefonoDestinatario, string detalle)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace AlkilaApp.Servicios.Implementacion
                         type = "header",
                         parameters = new Parameter[]
                         {
-                            new Parameter { type = "image" ,image = new Image { link = imagen } },
+                            new Parameter { type = "image" ,image = new Image { link = Setting.FotoWhatsApp } },
                         }
                     },
                     // Componente de cuerpo con el texto del destinatario
@@ -139,7 +139,7 @@ namespace AlkilaApp.Servicios.Implementacion
                         type = "body",
                         parameters = new Parameter[]
                         {
-                            new Parameter { type = "text", text = telefonoDestinatario },
+                            new Parameter { type = "text", text = detalle },
                         }
                     }
                 }
@@ -147,6 +147,7 @@ namespace AlkilaApp.Servicios.Implementacion
                 };
 
                 // Serialización del objeto de mensaje de WhatsApp a JSON
+
                 var json = JsonConvert.SerializeObject(mensajeWhatsApp);
 
                 // Contenido de la solicitud HTTP

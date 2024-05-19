@@ -114,6 +114,8 @@ namespace AlkilaApp.Vistas
 
                     ServicioWhatsApp servicioWhatsApp = new ServicioWhatsApp();
                     Usuario usuario = await servicioUsuario.ObtenerUsuarioPorId(item.IdUsuarioVendedor);
+                    Usuario otroUsuario = await servicioUsuario.ObtenerUsuarioPorId(item.IdUsuarioComprador);
+
 
                     string respuesta = resultado ? "aceptado" : "denegado";
 
@@ -121,7 +123,7 @@ namespace AlkilaApp.Vistas
 
                     string imagen = Setting.FotoWhatsApp;
 
-                    await servicioWhatsApp.EnviarPlantilla(detalleAlquiler, imagen);
+                    await servicioWhatsApp.EnviarPlantilla(otroUsuario.NumeroTelefono,detalleAlquiler);
                 }
             }
             catch (Exception ex)

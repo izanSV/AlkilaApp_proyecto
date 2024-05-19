@@ -12,11 +12,11 @@ namespace AlkilaApp
     {
         #region Atributos 
 
-        private ServicioProducto servicioProducto;
-        private Producto producto = new Producto();
-        private ServicioUsuario servicioUsuario;
-        private EditarDatosUsuario _editarDatosUsuario;
-        private Helpers _helperFoto = new Helpers();
+        public ServicioProducto servicioProducto;
+        public Producto producto = new Producto();
+        public ServicioUsuario servicioUsuario;
+        public EditarDatosUsuario _editarDatosUsuario;
+        public Helpers _helperFoto = new Helpers();
 
         // Variable para controlar que el usuario pueda volver a la página anterior en el caso de que quiera añadir un producto
         private bool _paginaDetalleProducto = true;
@@ -130,7 +130,7 @@ namespace AlkilaApp
         /// Verifica si todos los campos del formulario están completos.
         /// </summary>
         /// <returns>True si todos los campos están completos; de lo contrario, false.</returns>
-        private bool CamposCompletos()
+        public bool CamposCompletos()
         {
             return !string.IsNullOrWhiteSpace(NombreEntry.Text) &&
                    !string.IsNullOrWhiteSpace(DescripcionEditor.Text) &&

@@ -63,7 +63,7 @@ namespace AlkilaApp
         /// <summary>
         /// Carga los datos del usuario
         /// </summary>
-        private async void CargarDatosUsuario()
+        public async void CargarDatosUsuario()
         {
             try
             {
@@ -132,7 +132,7 @@ namespace AlkilaApp
         /// <summary>
         /// Maneja el evento de clic en el botón de ubicación actual
         /// </summary>
-        private async void BtnUbicacionActual(object sender, EventArgs e)
+        public async void BtnUbicacionActual(object sender, EventArgs e)
         {
             try
             {
@@ -158,7 +158,7 @@ namespace AlkilaApp
         /// <summary>
         /// Maneja el evento de clic en el botón de comprobar ubicación
         /// </summary>
-        private async void BtnComprobarUbicacion(object sender, EventArgs e)
+        public async void BtnComprobarUbicacion(object sender, EventArgs e)
         {
             try
             {
@@ -380,7 +380,7 @@ namespace AlkilaApp
         /// <summary>
         /// Habilita la edición de los campos de entrada
         /// </summary>
-        private async void OnEditarCamposClicked(object sender, EventArgs e)
+        public async void OnEditarCamposClicked(object sender, EventArgs e)
         {
             try
             {
@@ -403,7 +403,7 @@ namespace AlkilaApp
         /// <summary>
         /// Cancela la edición de los datos del usuario
         /// </summary>
-        private async void CancelarDatosClicked(object sender, EventArgs e)
+        public async void CancelarDatosClicked(object sender, EventArgs e)
         {
             try
             {
@@ -419,7 +419,7 @@ namespace AlkilaApp
         /// <summary>
         /// Guarda los datos del usuario
         /// </summary>
-        private async void GuardarDatosClicked(object sender, EventArgs e)
+        public async void GuardarDatosClicked(object sender, EventArgs e)
         {
             try
             {

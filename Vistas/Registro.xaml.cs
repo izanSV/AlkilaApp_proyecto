@@ -110,7 +110,7 @@ namespace AlkilaApp
         /// <summary>
         /// Correo electrónico del usuario.
         /// </summary>
-        private string CorreoElectronico { get; set; }
+        public string CorreoElectronico { get; set; }
 
         /// <summary>
         /// Indica si el usuario es un empresario.
@@ -123,7 +123,7 @@ namespace AlkilaApp
         /// <summary>
         /// Realiza el registro del usuario en la aplicación.
         /// </summary>
-        private async Task RegistroUsuario()
+        public async Task RegistroUsuario()
         {
             try
             {
@@ -237,7 +237,7 @@ namespace AlkilaApp
         /// Valida que los camos no estén vacios, ademas de la contraseña es la misma que la de repetición, 
         /// Valida la condición de la contraseña
         /// </summary>
-        private bool ComprobarCondiciones()
+        public bool ComprobarCondiciones()
         {
          
             if (string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Apellido) || string.IsNullOrWhiteSpace(CorreoElectronico) ||
@@ -251,7 +251,7 @@ namespace AlkilaApp
             }
 
             // la longitud del telefono tiene que ser de 9
-            if (TelefonoEntry.Text.Length != 9)
+            if (Telefono.Length != 9)
             {
                 DisplayAlert("Error", "Comprobar longitud del numero de telefono", "ACEPTAR");
                 return false;
@@ -276,7 +276,7 @@ namespace AlkilaApp
         /// Metodo para validar la contraseña del usuario el usuario
         /// </summary>
 
-        private bool ValidarLongitudContrasenya()
+        public bool ValidarLongitudContrasenya()
         {
             if (Contrasenya.Length < 6)
             {
@@ -293,7 +293,7 @@ namespace AlkilaApp
         /// Metodo para validar que es la misma contraseña
         /// </summary>
 
-        private bool ValidarCoincidenciaContrasenyas()
+        public bool ValidarCoincidenciaContrasenyas()
         {
             if (Contrasenya != RepContrasenya)
             {

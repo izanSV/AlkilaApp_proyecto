@@ -152,7 +152,23 @@ namespace AlkilaApp.Modelos
         /// Estado del alquiler.
         /// </summary>
         public Estado EstadoAlquiler { get; set; }
+
+
+        /// <summary>
+        /// Esta variable es para no tener que mostrar siempre los mensajes de alerta
+        /// // cambiaran el estado y no se volveran a mostrar
+        /// </summary>
+        private bool _noMasRespuesta;
+        public bool NoMasRespuesta
+        {
+            get => _noMasRespuesta;
+            set
+            {
+                _noMasRespuesta = value;
+            }
+        }
     }
+
 
     /// <summary>
     /// Enumeración que representa el estado del alquiler.

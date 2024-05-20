@@ -105,6 +105,7 @@ namespace AlkilaApp.Vistas
                         producto.EstaAlquilado = true;
                         await servicioProducto.ActualizarProductoAUsuario(producto, servicioUsuario.IdUsuario);
                         await servicioAlquilar.InsertarOAlquilarAlquiler(item);
+
                     }
                     else
                     {

@@ -135,8 +135,22 @@ namespace AlkilaApp
         {
             if (alquiler.EstadoAlquiler == Estado.Pendiente && alquiler.IdUsuarioVendedor.Equals(servicioUsuario.IdUsuario) && !primeraCondicionCumplida)
             {
-                await MostrarAlerta($"Comprueba el buzón de mensajes, tienes una propuesta para alquilar el siguiente producto:\n\n Nombre producto:{alquiler.NombreProductoAlquilado}");
+
+                if (alquiler.NoMasRespuesta)
+                {
+                   
+                  bool respuesta =  await DisplayAlert("Información", $"Comprueba el buzón de mensajes, tienes una propuesta para alquilar el siguiente producto:\n\n Nombre producto:{alquiler.NombreProductoAlquilado}", "ACEPTAR","NO VOLVER A PREGUNTAR");
+                   
+                    if (!respuesta) 
+                    { 
+                        alquiler.NoMasRespuesta = false;
+                        await servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
+                    }
+
+                }
+              
                 return true;
+
             }
 
             if (alquiler.EstadoAlquiler == Estado.Aceptado && alquiler.FechaFin <= DateTime.Now)
@@ -154,10 +168,12 @@ namespace AlkilaApp
             if (alquiler.EstadoAlquiler == Estado.Recibido && alquiler.IdUsuarioVendedor.Equals(servicioUsuario.IdUsuario))
             {
                 await ProcesarAlquilerRecibido(alquiler, producto);
+                
             }
 
             return primeraCondicionCumplida;
         }
+
 
         /// <summary>
         /// Eliminar alquileres finalizados
@@ -187,24 +203,35 @@ namespace AlkilaApp
         /// <summary>
         /// Procesar alquiler enviado
         /// </summary>
-        /// <param name="item">Objeto Alquiler</param>
+        /// <param name="alquiler">Objeto Alquiler</param>
         /// <param name="producto">Objeto Producto</param>
-        private async Task ProcesarAlquilerEnviado(Alquiler item, Producto producto)
+        private async Task ProcesarAlquilerEnviado(Alquiler alquiler, Producto producto)
         {
-            if (item.EstadoAlquiler == Estado.Enviado)
+            if (alquiler.EstadoAlquiler == Estado.Enviado)
             {
-                await servicioAlquiler.InsertarOAlquilarAlquiler(item);
+                await servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
 
-                await MostrarAlerta($"¿Hola, recuerda que hoy tienes que devolver sus pertenencias al usuario \n Producto: {item.NombreProductoAlquilado} ,\n Nombre de usuario: {item.NombreUsuarioComprador}");
-
+                // si el usuario presiona sobre no preguntar mas, entonces se deshabilitara la entrada y no se mostrará mas
+                if (!alquiler.NoMasRespuesta)
+                {
+                    // inicializamos a true para poder ver el alert
+                    alquiler.NoMasRespuesta = true;
+                    bool respuesta = await DisplayAlert("Información", $"¿Hola, recuerda que hoy tienes que devolver sus pertenencias al usuario \n Producto: {alquiler.NombreProductoAlquilado} ,\n Nombre de usuario: {alquiler.NombreUsuarioComprador}", "ACEPTAR","NO VOLVER A PREGUNTAR");
+                    if (!respuesta)
+                    {
+                        alquiler.NoMasRespuesta = false;
+                        await servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
+                    }
+                }
+                
                 bool valoracion = await MostrarAlertaConConfirmacion("Para nosotros es muy importante la valoración de nuestros clientes, te gustaría dar una calificación al producto que has alquilado?", "ACEPTAR ☑", "CANCELAR ☒");
 
                 if (valoracion)
                 {
-                    ValorarProducto(producto, item.IdUsuarioVendedor);
+                    ValorarProducto(producto, alquiler.IdUsuarioVendedor);
                 }
 
-                await ActualizarEstadoAlquiler(item, Estado.Recibido);
+                await ActualizarEstadoAlquiler(alquiler, Estado.Recibido);
             }
         }
 
@@ -246,7 +273,8 @@ namespace AlkilaApp
         /// <param name="mensaje">Mensaje de la alerta</param>
         private async Task MostrarAlerta(string mensaje)
         {
-            await DisplayAlert("", mensaje, "ACEPTAR");
+          await DisplayAlert("", mensaje, "ACEPTAR");
+
         }
 
         /// <summary>

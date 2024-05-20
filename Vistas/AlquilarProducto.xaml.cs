@@ -105,6 +105,7 @@ namespace AlkilaApp
             DateTime fechaInicio = FechaInicio.Date;
             DateTime fechaFin = FechaFin.Date;
             alquiler.EstadoAlquiler = Estado.Pendiente;
+            alquiler.NoMasRespuesta = true;
             alquiler.IdAlquiler = Guid.NewGuid().ToString();
 
             if (fechaInicio < fechaActual || fechaFin < fechaActual)

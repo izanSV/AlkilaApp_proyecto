@@ -5,6 +5,8 @@ namespace AlkilaApp.Servicios.Implementacion
 
     public class Helpers
     {
+        
+
 
         /// <summary>
         /// Sube una imagen a Firebase Storage.
@@ -81,5 +83,10 @@ namespace AlkilaApp.Servicios.Implementacion
                 return false;
             }
         }
+
+
+ 
+
+        
     }
 }

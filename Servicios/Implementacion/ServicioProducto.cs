@@ -18,15 +18,15 @@ namespace AlkilaApp.Servicios
         /// <summary>
         /// Cliente Firebase para interactuar con la base de datos.
         /// </summary>
-        private FirebaseClient firebaseClient;
+        private FirebaseClient _firebase;
 
         /// <summary>
-        /// ID del producto.
+        /// ID del _producto.
         /// </summary>
         private string _IdProducto;
 
         /// <summary>
-        /// Propiedad para acceder y establecer el ID del producto.
+        /// Propiedad para acceder y establecer el ID del _producto.
         /// </summary>
         public string IdUsuario
         {
@@ -48,7 +48,7 @@ namespace AlkilaApp.Servicios
         /// </summary>
         public ServicioProducto()
         {
-            firebaseClient = new FirebaseClient(Setting.FireBaseDatabaseUrl);
+            _firebase = new FirebaseClient(Setting.FireBaseDatabaseUrl);
         }
 
         #endregion
@@ -82,7 +82,7 @@ namespace AlkilaApp.Servicios
                 // Obtener todos los productos desde Firebase y mapearlos a una lista de Producto
                 return (await firebase.Child(nameof(Producto)).OnceAsync<Producto>()).Select(f => new Producto
                 {
-                    // Aquí podrías asignar los valores del producto si es necesario
+                    // Aquí podrías asignar los valores del _producto si es necesario
                 }).ToList();
             }
             catch (Exception ex)
@@ -94,10 +94,10 @@ namespace AlkilaApp.Servicios
         }
 
         /// <summary>
-        /// Método para obtener un producto por su ID.
+        /// Método para obtener un _producto por su ID.
         /// </summary>
-        /// <param name="idProducto">ID del producto a obtener.</param>
-        /// <returns>El producto encontrado, o null si no se encuentra.</returns>
+        /// <param name="idProducto">ID del _producto a obtener.</param>
+        /// <returns>El _producto encontrado, o null si no se encuentra.</returns>
         public async Task<Producto> ObtenerProductoPorId(string idProducto)
         {
             try
@@ -107,19 +107,19 @@ namespace AlkilaApp.Servicios
                 // Obtener una referencia a todos los usuarios en la base de datos
                 var usuarios = await firebaseClient.Child("Usuario").OnceAsync<Usuario>();
 
-                // Iterar sobre todos los usuarios para encontrar el que tiene el producto con el ID buscado
+                // Iterar sobre todos los usuarios para encontrar el que tiene el _producto con el ID buscado
                 foreach (var usuarioEntry in usuarios)
                 {
-                    var usuarioDic = usuarioEntry.Object; // Obtiene el diccionario del usuario
-                    var usuario = usuarioDic; // Obtiene el usuario del diccionario
+                    var usuarioDic = usuarioEntry.Object; // Obtiene el diccionario del _usuario
+                    var usuario = usuarioDic; // Obtiene el _usuario del diccionario
 
-                    // Verificar si el usuario tiene una lista de productos y si alguno de los productos tiene el ID buscado
+                    // Verificar si el _usuario tiene una lista de productos y si alguno de los productos tiene el ID buscado
                     if (usuario != null && usuario.ListaProductos != null)
                     {
-                        // Buscar el producto por su ID en la lista de productos del usuario
+                        // Buscar el _producto por su ID en la lista de productos del _usuario
                         var producto = usuario.ListaProductos.FirstOrDefault(p => p.IdProducto == idProducto);
 
-                        // Si se encuentra el producto, devolverlo
+                        // Si se encuentra el _producto, devolverlo
                         if (producto != null)
                         {
                             return producto;
@@ -127,23 +127,23 @@ namespace AlkilaApp.Servicios
                     }
                 }
 
-                // Si no se encuentra ningún producto con el ID buscado, devolver null
+                // Si no se encuentra ningún _producto con el ID buscado, devolver null
                 return null;
             }
             catch (Exception ex)
             {
                 // Manejar cualquier excepción que pueda ocurrir
-                Console.WriteLine("Error al obtener el producto por ID: " + ex.Message);
+                Console.WriteLine("Error al obtener el _producto por ID: " + ex.Message);
                 return null;
             }
         }
 
 
         /// <summary>
-        /// Método para eliminar un producto por su ID de la base de datos.
+        /// Método para eliminar un _producto por su ID de la base de datos.
         /// </summary>
-        /// <param name="idProducto">ID del producto a eliminar.</param>
-        /// <returns>True si se eliminó el producto correctamente, False si ocurrió un error.</returns>
+        /// <param name="idProducto">ID del _producto a eliminar.</param>
+        /// <returns>True si se eliminó el _producto correctamente, False si ocurrió un error.</returns>
         public async Task<bool> EliminarProductoPorId(string idProducto)
         {
             try
@@ -155,42 +155,42 @@ namespace AlkilaApp.Servicios
                 // Obtiene una referencia a todos los usuarios en la base de datos
                 var usuarios = await firebaseClient.Child("Usuario").OnceAsync<Usuario>();
 
-                // Itera sobre todos los usuarios para encontrar el que tiene el producto con el ID buscado
+                // Itera sobre todos los usuarios para encontrar el que tiene el _producto con el ID buscado
                 foreach (var usuarioEntry in usuarios)
                 {
-                    var usuarioDic = usuarioEntry.Object; // Obtiene el diccionario del usuario
-                    var usuario = usuarioDic; // Obtiene el usuario del diccionario
+                    var usuarioDic = usuarioEntry.Object; // Obtiene el diccionario del _usuario
+                    var usuario = usuarioDic; // Obtiene el _usuario del diccionario
 
-                    // Verifica si el usuario tiene una lista de productos y si alguno de los productos tiene el ID buscado
+                    // Verifica si el _usuario tiene una lista de productos y si alguno de los productos tiene el ID buscado
                     if (usuario != null && usuario.ListaProductos != null)
                     {
-                        // Busca el producto por su ID en la lista de productos del usuario
+                        // Busca el _producto por su ID en la lista de productos del _usuario
                         var producto = usuario.ListaProductos.FirstOrDefault(p => p.IdProducto == idProducto);
 
-                        // Si se encuentra el producto, lo elimina de la lista de productos del usuario
+                        // Si se encuentra el _producto, lo elimina de la lista de productos del _usuario
                         if (producto != null)
                         {
                             usuario.ListaProductos.Remove(producto);
 
-                            // Actualiza el usuario en la base de datos Firebase
+                            // Actualiza el _usuario en la base de datos Firebase
                             await firebaseClient.Child("Usuario").Child(usuarioEntry.Key).PutAsync(usuario);
 
                             // eliminamos la foto de fireStore
                             await helpers.DeleteFoto(producto.Foto);
 
-                            // Devuelve true para indicar que se ha eliminado el producto exitosamente
+                            // Devuelve true para indicar que se ha eliminado el _producto exitosamente
                             return true;
                         }
                     }
                 }
 
-                // Si no se encuentra ningún producto con el ID buscado, devuelve false
+                // Si no se encuentra ningún _producto con el ID buscado, devuelve false
                 return false;
             }
             catch (Exception ex)
             {
                 // Manejar cualquier excepción que pueda ocurrir
-                Console.WriteLine("Error al eliminar el producto por ID: " + ex.Message);
+                Console.WriteLine("Error al eliminar el _producto por ID: " + ex.Message);
                 return false;
             }
         }
@@ -199,7 +199,7 @@ namespace AlkilaApp.Servicios
         /// <summary>
         /// Método para obtener los productos de los usuarios que no han iniciado sesión.
         /// </summary>
-        /// <param name="idUsuarioActual">ID del usuario actualmente logeado.</param>
+        /// <param name="idUsuarioActual">ID del _usuario actualmente logeado.</param>
         /// <returns>Lista de productos de los usuarios no logeados.</returns>
         public async Task<List<Producto>> ObtenerProductosUsuariosNoLogeados(string idUsuarioActual)
         {
@@ -212,16 +212,16 @@ namespace AlkilaApp.Servicios
                 // Crea una lista para almacenar los productos de los usuarios no logeados
                 List<Producto> productosUsuarios = new List<Producto>();
 
-                // Itera sobre todos los usuarios y agrega sus productos a la lista si no es el usuario actual
+                // Itera sobre todos los usuarios y agrega sus productos a la lista si no es el _usuario actual
                 foreach (var usuario in usuarios)
                 {
-                    // Verifica si el usuario es diferente del usuario actual
+                    // Verifica si el _usuario es diferente del _usuario actual
                     if (usuario.Key != idUsuarioActual)
                     {
-                        // Verifica si el usuario tiene productos
+                        // Verifica si el _usuario tiene productos
                         if (usuario.Object.ListaProductos != null)
                         {
-                            // Agrega los productos del usuario a la lista
+                            // Agrega los productos del _usuario a la lista
                             productosUsuarios.AddRange(usuario.Object.ListaProductos);
                         }
                     }
@@ -240,8 +240,8 @@ namespace AlkilaApp.Servicios
         /// <summary>
         /// Método para obtener la lista de productos de un tipo específico de los usuarios no logeados.
         /// </summary>
-        /// <param name="tipoProducto">Tipo de producto a filtrar.</param>
-        /// <param name="idUsuarioActual">ID del usuario actualmente logeado.</param>
+        /// <param name="tipoProducto">Tipo de _producto a filtrar.</param>
+        /// <param name="idUsuarioActual">ID del _usuario actualmente logeado.</param>
         /// <returns>Lista de productos del tipo especificado de los usuarios no logeados.</returns>
         public async Task<List<Producto>> ObtenerListaProductosPorTipo(TipoProducto tipoProducto, string idUsuarioActual)
         {
@@ -264,21 +264,21 @@ namespace AlkilaApp.Servicios
         }
 
         /// <summary>
-        /// Método para actualizar un producto asociado a un usuario en la base de datos.
+        /// Método para actualizar un _producto asociado a un _usuario en la base de datos.
         /// </summary>
         /// <param name="producto">Producto a actualizar.</param>
-        /// <param name="idUsuario">ID del usuario al que está asociado el producto.</param>
-        /// <returns>True si se actualizó el producto correctamente, False si ocurrió un error.</returns>
+        /// <param name="idUsuario">ID del _usuario al que está asociado el _producto.</param>
+        /// <returns>True si se actualizó el _producto correctamente, False si ocurrió un error.</returns>
         public async Task<bool> ActualizarProductoAUsuario(Producto producto, string idUsuario)
         {
             try
             {
                 var firebaseClient = new FirebaseClient(Setting.FireBaseDatabaseUrl);
 
-                // Obtener una referencia al nodo del usuario en la base de datos
+                // Obtener una referencia al nodo del _usuario en la base de datos
                 var usuarioNode = firebaseClient.Child("Usuario").Child(idUsuario);
 
-                // Obtener la lista de productos del usuario
+                // Obtener la lista de productos del _usuario
                 var listaProductos = await usuarioNode.Child("ListaProductos").OnceSingleAsync<List<Producto>>();
 
                 // Si la lista de productos no existe, inicializarla como una nueva lista
@@ -287,12 +287,12 @@ namespace AlkilaApp.Servicios
                     listaProductos = new List<Producto>();
                 }
 
-                // Buscar si ya existe un producto con el mismo ID en la lista
+                // Buscar si ya existe un _producto con el mismo ID en la lista
                 var productoExistente = listaProductos.FirstOrDefault(p => p.IdProducto == producto.IdProducto);
 
                 if (productoExistente != null)
                 {
-                    // Actualizar los datos del producto existente con los datos del nuevo producto
+                    // Actualizar los datos del _producto existente con los datos del nuevo _producto
                     productoExistente.Nombre = producto.Nombre;
                     productoExistente.DescripcionProducto = producto.DescripcionProducto;
                     productoExistente.Precio = producto.Precio;
@@ -309,13 +309,13 @@ namespace AlkilaApp.Servicios
                     return true;
                 }
 
-                // Si no existe un producto con el mismo ID en la lista, se considera como un error
+                // Si no existe un _producto con el mismo ID en la lista, se considera como un error
                 return false;
             }
             catch (Exception ex)
             {
                 // Manejar cualquier excepción que pueda ocurrir
-                Console.WriteLine("Error al agregar producto al usuario: " + ex.Message);
+                Console.WriteLine("Error al agregar _producto al _usuario: " + ex.Message);
                 return false;
             }
         }

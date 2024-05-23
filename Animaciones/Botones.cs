@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AlkilaApp.Animaciones
 {
     /// <summary>
-    /// Clase que proporciona funcionalidad para controlar la animación y el estado de los botones en la interfaz de usuario.
+    /// Clase que proporciona funcionalidad para controlar la animación y el estado de los botones en la interfaz de _usuario.
     /// </summary>
     internal class Botones : IDisposable
     {
@@ -70,7 +70,7 @@ namespace AlkilaApp.Animaciones
         /// </summary>
         /// <param name="sender">El objeto que desencadenó el evento.</param>
         /// <param name="e">Argumentos del evento.</param>
-        public static async Task animaacionImageButton(object sender, EventArgs e)
+        public static async Task animacionImageButton(object sender, EventArgs e)
         {
             ImageButton button = (ImageButton)sender;
 

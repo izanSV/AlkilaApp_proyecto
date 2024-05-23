@@ -13,12 +13,12 @@ namespace AlkilaApp
     public class ServicioUsuario
     {
         /// <summary>
-        /// Identificador único del usuario.
+        /// Identificador único del _usuario.
         /// </summary>
         private string _IdUsuario;
 
         /// <summary>
-        /// Propiedad que obtiene o establece el identificador único del usuario.
+        /// Propiedad que obtiene o establece el identificador único del _usuario.
         /// </summary>
         public string IdUsuario
         {
@@ -30,9 +30,9 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Registra un nuevo usuario utilizando Firebase Authentication.
+        /// Registra un nuevo _usuario utilizando Firebase Authentication.
         /// </summary>
-        /// <param name="usuario">Datos del usuario a registrar.</param>
+        /// <param name="usuario">Datos del _usuario a registrar.</param>
         /// <returns>Una cadena de respuesta indicando el resultado del registro.</returns>
         public async Task<string> RegistroUsuariosAsync(Usuario usuario)
         {
@@ -40,15 +40,15 @@ namespace AlkilaApp
 
             try
             {
-                // Llamar al servicio de autenticación para crear el usuario
+                // Llamar al servicio de autenticación para crear el _usuario
                 FirebaseAuthProvider authProvider = new FirebaseAuthProvider(new FirebaseConfig(Setting.FirebaseApiKey));
                 var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(usuario.CorreoElectronico, usuario.Contrasenya);
                 string token = auth.FirebaseToken;
 
-                // Si se ha creado el usuario correctamente
+                // Si se ha creado el _usuario correctamente
                 if (token != null)
                 {
-                    // Obtener el ID único del usuario recién registrado
+                    // Obtener el ID único del _usuario recién registrado
                     this.IdUsuario = auth.User.LocalId;
 
                     respuesta = "OK";
@@ -71,7 +71,7 @@ namespace AlkilaApp
             catch (Exception ex)
             {
                 // Manejar otras excepciones generales
-                respuesta = "Error al registrar el usuario" + ex.Message;
+                respuesta = "Error al registrar el _usuario" + ex.Message;
             }
 
             return respuesta; // Devolver la respuesta
@@ -80,10 +80,10 @@ namespace AlkilaApp
 
 
         /// <summary>
-    /// Valida la autenticación del usuario con el correo electrónico y la contraseña proporcionados.
+    /// Valida la autenticación del _usuario con el correo electrónico y la contraseña proporcionados.
     /// </summary>
-    /// <param name="correo">Correo electrónico del usuario.</param>
-    /// <param name="contrasenya">Contraseña del usuario.</param>
+    /// <param name="correo">Correo electrónico del _usuario.</param>
+    /// <param name="contrasenya">Contraseña del _usuario.</param>
     /// <returns>Un mensaje de respuesta indicando el resultado de la autenticación.</returns>
         public async Task<string> ValidarUsuariosAsync(string correo, string contrasenya)
         {
@@ -96,7 +96,7 @@ namespace AlkilaApp
                 var serializedContent = JsonConvert.SerializeObject(content);
                 Preferences.Set("FreshFirebaseToken", serializedContent);
 
-                // Actualizar el campo IdUsuario del objeto Usuario con el Id del usuario autenticado
+                // Actualizar el campo IdUsuario del objeto Usuario con el Id del _usuario autenticado
                 this.IdUsuario = auth.User.LocalId;
                 respuesta = "Autenticación exitosa";
             }
@@ -117,7 +117,7 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Añade o actualiza un usuario en la base de datos de Firebase.
+        /// Añade o actualiza un _usuario en la base de datos de Firebase.
         /// </summary>
         /// <param name="usuario">Usuario a añadir o actualizar.</param>
         /// <returns>Un mensaje de respuesta indicando el resultado de la operación.</returns>
@@ -128,14 +128,14 @@ namespace AlkilaApp
                 if (this.IdUsuario != null)
                 {
                     usuario.IdUsuario = this.IdUsuario;
-                    // Crear un nodo en la base de datos de Firebase para almacenar la información del usuario
+                    // Crear un nodo en la base de datos de Firebase para almacenar la información del _usuario
                     var firebase = new FirebaseClient(Setting.FireBaseDatabaseUrl);
                     var usuarios = firebase.Child("Usuario");
                     await usuarios.Child(this.IdUsuario).PutAsync(usuario);
                     return "La operación se ha realizado correctamente.";
                 }
 
-                return "El usuario no se ha podido registrar";
+                return "El _usuario no se ha podido registrar";
             }
             catch (FirebaseException ex)
             {
@@ -152,9 +152,9 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Obtiene el usuario registrado con el ID de usuario actual.
+        /// Obtiene el _usuario registrado con el ID de _usuario actual.
         /// </summary>
-        /// <returns>El usuario registrado con el ID de usuario actual, o null si no se encuentra.</returns>
+        /// <returns>El _usuario registrado con el ID de _usuario actual, o null si no se encuentra.</returns>
         public async Task<Usuario> ObtenerUsuarioRegistrado()
         {
             var firebase = new FirebaseClient(Setting.FireBaseDatabaseUrl);
@@ -165,20 +165,20 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Obtiene la lista de productos asociados a un usuario con el ID especificado.
+        /// Obtiene la lista de productos asociados a un _usuario con el ID especificado.
         /// </summary>
-        /// <param name="id">ID del usuario.</param>
-        /// <returns>Una lista de productos del usuario, o una lista vacía si no se encuentra ningún producto o se produce un error.</returns>
+        /// <param name="id">ID del _usuario.</param>
+        /// <returns>Una lista de productos del _usuario, o una lista vacía si no se encuentra ningún _producto o se produce un error.</returns>
         public async Task<List<Producto>> ObtenerListaProductos(string id)
         {
             var listaProductos = new List<Producto>();
             var firebaseClient = new FirebaseClient(Setting.FireBaseDatabaseUrl);
             try
             {
-                // Obtener una referencia al nodo del usuario en la base de datos
+                // Obtener una referencia al nodo del _usuario en la base de datos
                 var usuarioNode = firebaseClient.Child("Usuario").Child(id);
 
-                // Obtener la lista de productos del usuario
+                // Obtener la lista de productos del _usuario
                 var productosSnapshot = await usuarioNode.Child("ListaProductos").OnceSingleAsync<List<Producto>>();
 
                 // Agregar los productos directamente a la lista
@@ -196,10 +196,10 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Obtiene un usuario que tiene un producto con el ID especificado.
+        /// Obtiene un _usuario que tiene un _producto con el ID especificado.
         /// </summary>
-        /// <param name="idProducto">ID del producto.</param>
-        /// <returns>El usuario que tiene el producto con el ID especificado, o null si no se encuentra.</returns>
+        /// <param name="idProducto">ID del _producto.</param>
+        /// <returns>El _usuario que tiene el _producto con el ID especificado, o null si no se encuentra.</returns>
         public async Task<Usuario> ObtenerUsuarioPorIdProducto(string idProducto)
         {
             try
@@ -208,27 +208,27 @@ namespace AlkilaApp
                 // Obtiene una referencia a todos los usuarios en la base de datos
                 var usuarios = await firebaseClient.Child("Usuario").OnceAsync<Usuario>();
 
-                // Itera sobre todos los usuarios para encontrar el que tiene el producto con el ID buscado
+                // Itera sobre todos los usuarios para encontrar el que tiene el _producto con el ID buscado
                 foreach (var usuarioEntry in usuarios)
                 {
-                    var usuarioDic = usuarioEntry.Object; // Obtiene el diccionario del usuario
-                    var usuario = usuarioDic; // Obtiene el usuario del diccionario
+                    var usuarioDic = usuarioEntry.Object; // Obtiene el diccionario del _usuario
+                    var usuario = usuarioDic; // Obtiene el _usuario del diccionario
 
-                    // Verifica si el usuario tiene una lista de productos y si alguno de los productos tiene el ID buscado
+                    // Verifica si el _usuario tiene una lista de productos y si alguno de los productos tiene el ID buscado
                     if (usuario != null && usuario.ListaProductos != null && usuario.ListaProductos.Any(producto => producto.IdProducto == idProducto))
                     {
-                        // Si se encuentra un producto con el ID buscado, devuelve el usuario
+                        // Si se encuentra un _producto con el ID buscado, devuelve el _usuario
                         return usuario;
                     }
                 }
 
-                // Si no se encuentra ningún usuario con el producto buscado, devuelve null
+                // Si no se encuentra ningún _usuario con el _producto buscado, devuelve null
                 return null;
             }
             catch (Exception ex)
             {
                 // Manejar cualquier excepción que pueda ocurrir
-                Console.WriteLine("Error al obtener el usuario por ID de producto: " + ex.Message);
+                Console.WriteLine("Error al obtener el _usuario por ID de _producto: " + ex.Message);
                 return null;
             }
         }
@@ -265,25 +265,25 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Obtiene un usuario de la base de datos Firebase por su ID.
+        /// Obtiene un _usuario de la base de datos Firebase por su ID.
         /// </summary>
-        /// <param name="idUsuario">ID del usuario a buscar.</param>
-        /// <returns>El usuario encontrado o null si no se encuentra.</returns>
+        /// <param name="idUsuario">ID del _usuario a buscar.</param>
+        /// <returns>El _usuario encontrado o null si no se encuentra.</returns>
         public async Task<Usuario> ObtenerUsuarioPorId(string idUsuario)
         {
             try
             {
                 var firebaseClient = new FirebaseClient(Setting.FireBaseDatabaseUrl);
-                // Obtener una referencia al nodo del usuario por su ID en la base de datos
+                // Obtener una referencia al nodo del _usuario por su ID en la base de datos
                 var usuarioSnapshot = await firebaseClient.Child("Usuario").Child(idUsuario).OnceSingleAsync<Usuario>();
 
-                // Si se encuentra un usuario con el ID proporcionado, devuelve el usuario
+                // Si se encuentra un _usuario con el ID proporcionado, devuelve el _usuario
                 return usuarioSnapshot;
             }
             catch (Exception ex)
             {
                 // Manejar cualquier excepción que pueda ocurrir
-                Console.WriteLine("Error al obtener el usuario por ID: " + ex.Message);
+                Console.WriteLine("Error al obtener el _usuario por ID: " + ex.Message);
                 return null;
             }
         }
@@ -291,7 +291,7 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Agrega un producto al usuario en la base de datos.
+        /// Agrega un _producto al _usuario en la base de datos.
         /// </summary>
         /// <param name="producto">Producto a agregar.</param>
         /// <returns>Un mensaje indicando el resultado de la operación.</returns>
@@ -301,10 +301,10 @@ namespace AlkilaApp
             {
                 var firebaseClient = new FirebaseClient(Setting.FireBaseDatabaseUrl);
 
-                // Obtener una referencia al nodo del usuario en la base de datos
+                // Obtener una referencia al nodo del _usuario en la base de datos
                 var usuarioNode = firebaseClient.Child("Usuario").Child(IdUsuario);
 
-                // Obtener la lista de productos del usuario
+                // Obtener la lista de productos del _usuario
                 var listaProductos = await usuarioNode.Child("ListaProductos").OnceSingleAsync<List<Producto>>();
 
                 // Si la lista de productos no existe, inicializarla como una nueva lista
@@ -313,7 +313,7 @@ namespace AlkilaApp
                     listaProductos = new List<Producto>();
                 }
 
-                // Agregar el nuevo producto a la lista de productos del usuario
+                // Agregar el nuevo _producto a la lista de productos del _usuario
                 listaProductos.Add(producto);
 
                 // Guardar la lista actualizada de productos en la base de datos
@@ -323,8 +323,8 @@ namespace AlkilaApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al agregar producto al usuario: " + ex.Message);
-                return "Error al agregar producto al usuario: " + ex.Message;
+                Console.WriteLine("Error al agregar _producto al usuario: " + ex.Message);
+                return "Error al agregar producto al _usuario: " + ex.Message;
             }
         }
     }

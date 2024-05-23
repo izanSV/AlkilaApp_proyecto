@@ -45,7 +45,7 @@ namespace AlkilaApp
         #region Metodos
 
         /// <summary>
-        /// Nombre del usuario.
+        /// Nombre del _usuario.
         /// </summary>
         public string? Nombre
         {
@@ -54,7 +54,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Teléfono del usuario.
+        /// Teléfono del _usuario.
         /// </summary>
         public string? Telefono
         {
@@ -63,7 +63,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Apellido del usuario.
+        /// Apellido del _usuario.
         /// </summary>
         public string? Apellido
         {
@@ -72,7 +72,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Contraseña del usuario.
+        /// Contraseña del _usuario.
         /// </summary>
         public string? Contrasenya
         {
@@ -81,7 +81,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Repetición de la contraseña del usuario.
+        /// Repetición de la contraseña del _usuario.
         /// </summary>
         public string? RepContrasenya
         {
@@ -90,7 +90,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Fecha de nacimiento del usuario.
+        /// Fecha de nacimiento del _usuario.
         /// </summary>
         public DateTime FechaNacimiento
         {
@@ -99,7 +99,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// URL de la foto de perfil del usuario.
+        /// URL de la foto de perfil del _usuario.
         /// </summary>
         public string? Foto
         {
@@ -108,12 +108,12 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Correo electrónico del usuario.
+        /// Correo electrónico del _usuario.
         /// </summary>
         public string CorreoElectronico { get; set; }
 
         /// <summary>
-        /// Indica si el usuario es un empresario.
+        /// Indica si el _usuario es un empresario.
         /// </summary>
         private bool UsuarioEmpresario { get; set; }
 
@@ -121,7 +121,7 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Realiza el registro del usuario en la aplicación.
+        /// Realiza el registro del _usuario en la aplicación.
         /// </summary>
         public async Task RegistroUsuario()
         {
@@ -129,20 +129,20 @@ namespace AlkilaApp
             {
                 UsuarioEmpresario = false;
 
-                // Si el usuario introduce un código correcto (NIF), entenderemos que es una empresa, por el contrario es usuario normal
+                // Si el _usuario introduce un código correcto (NIF), entenderemos que es una empresa, por el contrario es _usuario normal
                 bool esEmpresario = VentanaModalEmpresa.EsEmpresarioElUsuario();
 
                 UsuarioEmpresario = esEmpresario;
 
-                // Recogemos los datos escritos por el usuario
+                // Recogemos los datos escritos por el _usuario
                 EntradaDatos();
 
-                // Realiza todas las comprobaciones necesarias antes de registrar al usuario
+                // Realiza todas las comprobaciones necesarias antes de registrar al _usuario
                 bool condicionesCumplidas = ComprobarCondiciones();
 
                 if (condicionesCumplidas)
                 {
-                    // Si todas las condiciones son satisfactorias, procede con el registro del usuario
+                    // Si todas las condiciones son satisfactorias, procede con el registro del _usuario
 
                     _nuevoUsuario = new Usuario
                     {
@@ -157,11 +157,11 @@ namespace AlkilaApp
                         ListaProductos = new List<Producto>()
                     };
 
-                        // Realiza el registro del usuario
+                        // Realiza el registro del _usuario
                         string respuestaServicio = await _Servicio.RegistroUsuariosAsync(_nuevoUsuario);
                         
                     
-                    // Si no se ha registrado correctamente, enviara un alert con un error, aprovechamos la validación de firebase del correo electrónico
+                    // Si no se ha registrado correctamente, enviara un alert con un error, aprovechamos la validación de _firebase del correo electrónico
                     if (!respuestaServicio.Equals("OK"))
                     {
                         await DisplayAlert("Error", respuestaServicio, "ACEPTAR");
@@ -169,13 +169,13 @@ namespace AlkilaApp
                     }
                    
 
-                        // Añade o actualiza el usuario en el servicio
+                        // Añade el usuario en el servicio
                         string respuesta = await _Servicio.AnyadirOActualizarUsuario(_nuevoUsuario);
 
 
                     if (_nuevoUsuario.IdUsuario != null)
                     {
-                        // Aquí mostrara como que el usuario se ha registrado correctamente por que ha obtendio el ID
+                        // Aquí mostrara como que el _usuario se ha registrado correctamente por que ha obtendio el ID
                         await DisplayAlert("", respuesta, "ACEPTAR");
                     }
 
@@ -189,7 +189,7 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Verifica la entrada del usuario, en el caso de que sea null, lanza un mensaje.
+        /// Verifica la entrada del _usuario, en el caso de que sea null, lanza un mensaje.
         /// </summary>
         public void EntradaDatos()
             {
@@ -231,8 +231,6 @@ namespace AlkilaApp
                     string.IsNullOrWhiteSpace(RepContrasenya) || string.IsNullOrWhiteSpace(Telefono));
             }
 
-
-
         /// <summary>
         /// Valida que los camos no estén vacios, ademas de la contraseña es la misma que la de repetición, 
         /// Valida la condición de la contraseña
@@ -270,10 +268,8 @@ namespace AlkilaApp
 
         }
 
-
-       
         /// <summary>
-        /// Metodo para validar la contraseña del usuario el usuario
+        /// Metodo para validar la contraseña del _usuario el _usuario
         /// </summary>
 
         public bool ValidarLongitudContrasenya()
@@ -309,7 +305,7 @@ namespace AlkilaApp
         #region Botones
 
         /// <summary>
-        /// Maneja el evento de clic en el botón de registro de usuario.
+        /// Maneja el evento de clic en el botón de registro de _usuario.
         /// </summary>
         /// <param name="sender">Objeto que desencadenó el evento.</param>
         /// <param name="e">Argumentos del evento.</param>
@@ -322,7 +318,7 @@ namespace AlkilaApp
                 {
                     // Realiza la animación del botón
                     await Botones.animaacionButton(sender, e);
-                    // Llama al método de registro de usuario
+                    // Llama al método de registro de _usuario
                     await RegistroUsuario();
                 }
                 catch (Exception ex)

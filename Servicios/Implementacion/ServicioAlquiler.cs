@@ -3,6 +3,7 @@ using AlkilaApp.Modelos;
 using AlkilaApp.Servicios;
 using Firebase.Database;
 using Firebase.Database.Query;
+using Newtonsoft.Json.Linq;
 
 namespace AlkilaApp
 {
@@ -15,7 +16,7 @@ namespace AlkilaApp
     {
 
         #region Atributos
-        private FirebaseClient firebase;
+        private FirebaseClient _firebase;
         #endregion
 
         #region Constructor
@@ -26,7 +27,7 @@ namespace AlkilaApp
         /// </summary>
         public ServicioAlquiler()
         {
-            firebase = new FirebaseClient(Setting.FireBaseDatabaseUrl);
+            _firebase = new FirebaseClient(Setting.FireBaseDatabaseUrl);
         }
 
         #endregion
@@ -35,7 +36,7 @@ namespace AlkilaApp
         #region Metodos
 
         /// <summary>
-        /// Inserta o actualiza un alquiler en la base de datos.
+        /// Inserta o actualiza un _alquiler en la base de datos.
         /// </summary>
         /// <param name="alquiler">El objeto Alquiler a insertar o actualizar.</param>
         /// <returns>True si la operación se realizó con éxito; de lo contrario, false.</returns>
@@ -45,7 +46,7 @@ namespace AlkilaApp
             {
                 if (alquiler.IdAlquiler != null)
                 {
-                    await firebase.Child("Alquiler").Child(alquiler.IdAlquiler).PutAsync(alquiler);
+                    await _firebase.Child("Alquiler").Child(alquiler.IdAlquiler).PutAsync(alquiler);
                     return true;
                 }
                 return false;
@@ -58,16 +59,16 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Obtiene una lista de alquileres por ID de usuario comprador o vendedor.
+        /// Obtiene una lista de alquileres por ID de _usuario comprador o vendedor.
         /// </summary>
-        /// <param name="idUsuario">El ID del usuario comprador o vendedor.</param>
-        /// <returns>Una lista de alquileres que coinciden con el ID de usuario proporcionado.</returns>
+        /// <param name="idUsuario">El ID del _usuario comprador o vendedor.</param>
+        /// <returns>Una lista de alquileres que coinciden con el ID de _usuario proporcionado.</returns>
         public async Task<List<Alquiler>> GetAlquileresByUsuarioCompradorYVendedorId(string idUsuario)
         {
             try
             {
                 // Obtener todos los alquileres
-                var alquileres = await firebase.Child("Alquiler").OnceAsync<Alquiler>();
+                var alquileres = await _firebase.Child("Alquiler").OnceAsync<Alquiler>();
 
                 // Filtrar alquileres que coincidan con el idUsuarioComprador o el idUsuarioVendedor
                 var alquileresCoincidentes = alquileres
@@ -91,18 +92,18 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Obtiene un alquiler por el ID de un producto asociado a él.
+        /// Obtiene un _alquiler por el ID de un _producto asociado a él.
         /// </summary>
-        /// <param name="idProducto">El ID del producto asociado al alquiler.</param>
-        /// <returns>El alquiler correspondiente al ID de producto proporcionado.</returns>
+        /// <param name="idProducto">El ID del _producto asociado al _alquiler.</param>
+        /// <returns>El _alquiler correspondiente al ID de _producto proporcionado.</returns>
         public async Task<Alquiler> ObtenterAlquilerporProductoId(string idProducto)
         {
             try
             {
                 // Obtener todos los alquileres
-                var alquileres = await firebase.Child("Alquiler").OnceAsync<Alquiler>();
+                var alquileres = await _firebase.Child("Alquiler").OnceAsync<Alquiler>();
 
-                // Buscar el alquiler que tenga el producto con el id proporcionado
+                // Buscar el _alquiler que tenga el _producto con el id proporcionado
                 var alquiler = alquileres
                     .Select(alquiler => alquiler.Object)
                     .FirstOrDefault(alquiler => alquiler.IdProducto == idProducto);
@@ -118,9 +119,9 @@ namespace AlkilaApp
 
 
         /// <summary>
-        /// Elimina un alquiler por su ID.
+        /// Elimina un _alquiler por su ID.
         /// </summary>
-        /// <param name="idAlquiler">El ID del alquiler a eliminar.</param>
+        /// <param name="idAlquiler">El ID del _alquiler a eliminar.</param>
         /// <returns>True si la operación se realizó con éxito; de lo contrario, false.</returns>
         public async Task<bool> EliminarAlquilerPorId(string idAlquiler)
         {
@@ -128,8 +129,8 @@ namespace AlkilaApp
             {
                 if (idAlquiler != null)
                 {
-                    // Eliminar el alquiler 
-                    await firebase.Child("Alquiler").Child(idAlquiler).DeleteAsync();
+                    // Eliminar el _alquiler 
+                    await _firebase.Child("Alquiler").Child(idAlquiler).DeleteAsync();
                 }
 
                 return true;

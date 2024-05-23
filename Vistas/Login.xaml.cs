@@ -8,17 +8,17 @@ namespace AlkilaApp
         #region Atributos
 
         /// <summary>
-        /// Servicio de usuario
+        /// Servicio de _usuario
         /// </summary>
         private ServicioUsuario _Servicio;
 
         /// <summary>
-        /// Correo electrónico del usuario
+        /// Correo electrónico del _usuario
         /// </summary>
         private string _correoElectronico;
 
         /// <summary>
-        /// Contraseña del usuario
+        /// Contraseña del _usuario
         /// </summary>
         private string _contrasenya;
 
@@ -40,7 +40,7 @@ namespace AlkilaApp
         #region Metodos
 
         /// <summary>
-        /// Correo electrónico del usuario
+        /// Correo electrónico del _usuario
         /// </summary>
         public string CorreoElectronico
         {
@@ -49,7 +49,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Contraseña del usuario
+        /// Contraseña del _usuario
         /// </summary>
         public string Contrasenya
         {
@@ -58,7 +58,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Método para almacenar los datos de entrada del usuario
+        /// Método para almacenar los datos de entrada del _usuario
         /// </summary>
         public async void EntradaDatos()
         {
@@ -84,7 +84,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Método para validar el usuario
+        /// Método para validar el _usuario
         /// </summary>
         public async Task ValidarUsuario()
         {

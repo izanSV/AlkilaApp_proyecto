@@ -15,19 +15,19 @@ namespace AlkilaApp
         private INavigation _Navigation;
 
         /// <summary>
-        /// Servicio de usuario
+        /// Servicio de _usuario
         /// </summary>
-        private ServicioUsuario servicioUsuario;
+        private ServicioUsuario _servicioUsuario;
 
         /// <summary>
-        /// Objeto usuario
+        /// Objeto _usuario
         /// </summary>
-        private Usuario usuario = new Usuario();
+        private Usuario _usuario = new Usuario();
 
         /// <summary>
         /// Objeto ubicación
         /// </summary>
-        private Ubicacion ubicacion = new Ubicacion();
+        private Ubicacion _ubicacion = new Ubicacion();
 
         /// <summary>
         /// Servicio de ubicación
@@ -47,13 +47,13 @@ namespace AlkilaApp
         /// Constructor de la clase EditarDatosUsuario
         /// </summary>
         /// <param name="navigation">Objeto de navegación</param>
-        /// <param name="idUsuario">ID del usuario</param>
+        /// <param name="idUsuario">ID del _usuario</param>
         public EditarDatosUsuario(INavigation navigation, string idUsuario)
         {
             InitializeComponent();
             _Navigation = navigation;
-            servicioUsuario = new ServicioUsuario();
-            servicioUsuario.IdUsuario = idUsuario;
+            _servicioUsuario = new ServicioUsuario();
+            _servicioUsuario.IdUsuario = idUsuario;
         }
 
         #endregion
@@ -61,29 +61,29 @@ namespace AlkilaApp
         #region Metodos
 
         /// <summary>
-        /// Carga los datos del usuario
+        /// Carga los datos del _usuario
         /// </summary>
         public async void CargarDatosUsuario()
         {
             try
             {
-                usuario = await servicioUsuario.ObtenerUsuarioRegistrado();
-                ubicacion = await _servicioUbicacion.ObtenerLocalizacionAsync(servicioUsuario.IdUsuario);
+                _usuario = await _servicioUsuario.ObtenerUsuarioRegistrado();
+                _ubicacion = await _servicioUbicacion.ObtenerLocalizacionAsync(_servicioUsuario.IdUsuario);
 
-                // Asignar los datos del usuario a los campos
-                NombreEntry.Text = usuario.Nombre;
-                ApellidoEntry.Text = usuario.Apellido;
-                ContrasenyaEntry.Text = usuario.Contrasenya;
-                CorreoElectronicoEntry.Text = usuario.CorreoElectronico;
-                DateEntry.Date = usuario.FechaNacimiento;
-                boton_foto_perfil.Source = usuario.Foto;
-                TelefonoEntry.Text = usuario.NumeroTelefono;
+                // Asignar los datos del _usuario a los campos
+                NombreEntry.Text = _usuario.Nombre;
+                ApellidoEntry.Text = _usuario.Apellido;
+                ContrasenyaEntry.Text = _usuario.Contrasenya;
+                CorreoElectronicoEntry.Text = _usuario.CorreoElectronico;
+                DateEntry.Date = _usuario.FechaNacimiento;
+                boton_foto_perfil.Source = _usuario.Foto;
+                TelefonoEntry.Text = _usuario.NumeroTelefono;
 
-                if (ubicacion != null)
+                if (_ubicacion != null)
                 {
                     // Cargamos los datos de la ubicación
-                    CalleEntry.Text = ubicacion.Calle;
-                    LocalidadEntry.Text = ubicacion.Localidad;
+                    CalleEntry.Text = _ubicacion.Calle;
+                    LocalidadEntry.Text = _ubicacion.Localidad;
                 }
             }
             catch (Exception)
@@ -99,7 +99,7 @@ namespace AlkilaApp
         {
             try
             {
-                var listaProductosActualizada = await servicioUsuario.ObtenerListaProductos(servicioUsuario.IdUsuario);
+                var listaProductosActualizada = await _servicioUsuario.ObtenerListaProductos(_servicioUsuario.IdUsuario);
                 ProductosCollectionView.ItemsSource = listaProductosActualizada;
 
                 NoProductosLabel.IsVisible = listaProductosActualizada == null || listaProductosActualizada.Count == 0;
@@ -139,11 +139,11 @@ namespace AlkilaApp
 
                 btnUbiReal.IsEnabled = false;
 
-                ubicacion = await RegistrarUbicacionEnTiempoReal();
-                if (ubicacion != null)
+                _ubicacion = await RegistrarUbicacionEnTiempoReal();
+                if (_ubicacion != null)
                 {
-                    await DisplayAlert("Ubicación registrada", (ubicacion.Calle + " ," + ubicacion.Localidad), "ACEPTAR");
-                    await _servicioUbicacion.InsertarOActualizarUbicacion(ubicacion);
+                    await DisplayAlert("Ubicación registrada", (_ubicacion.Calle + " ," + _ubicacion.Localidad), "ACEPTAR");
+                    await _servicioUbicacion.InsertarOActualizarUbicacion(_ubicacion);
                 }
             }
             catch (Exception ex)
@@ -167,8 +167,8 @@ namespace AlkilaApp
                 string localidad = LocalidadEntry.Text;
                 string calle = CalleEntry.Text;
 
-                ubicacion = await RegistrarUbicacion(localidad, calle);
-                Console.WriteLine(ubicacion);
+                _ubicacion = await RegistrarUbicacion(localidad, calle);
+                Console.WriteLine(_ubicacion);
             }
             catch (Exception)
             {
@@ -384,7 +384,7 @@ namespace AlkilaApp
         {
             try
             {
-                await animaacionButton(sender, e);
+                await animacionButton(sender, e);
 
                 NombreEntry.IsEnabled = true;
                 ApellidoEntry.IsEnabled = true;
@@ -401,14 +401,14 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Cancela la edición de los datos del usuario
+        /// Cancela la edición de los datos del _usuario
         /// </summary>
         public async void CancelarDatosClicked(object sender, EventArgs e)
         {
             try
             {
-                await animaacionButton(sender, e);
-                await _Navigation.PushAsync(new VistaProductos(servicioUsuario.IdUsuario));
+                await animacionButton(sender, e);
+                await _Navigation.PushAsync(new VistaProductos(_servicioUsuario.IdUsuario));
             }
             catch (Exception)
             {
@@ -417,47 +417,56 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Guarda los datos del usuario
+        /// Guarda los datos del _usuario
         /// </summary>
         public async void GuardarDatosClicked(object sender, EventArgs e)
         {
             try
             {
+                // aplicamos la animación
+               await animacionButton(sender, e);
                 // Verificar si los campos están vacíos
                 if (string.IsNullOrWhiteSpace(NombreEntry.Text) ||
                     string.IsNullOrWhiteSpace(ApellidoEntry.Text) ||
                     string.IsNullOrWhiteSpace(TelefonoEntry.Text))
                 {
                     // Mostrar un mensaje de advertencia
-                    await DisplayAlert("Campos vacíos", "Por favor, complete todos los campos antes de guardar.", "Aceptar");
+                    await DisplayAlert("Campos vacíos", "Por favor, complete todos los campos antes de guardar.", "ACEPTAR");
                     return; // Salir del método sin guardar los datos
                 }
 
-                usuario.Nombre = NombreEntry.Text;
-                usuario.Apellido = ApellidoEntry.Text;
-                usuario.FechaNacimiento = DateEntry.Date;
-                usuario.NumeroTelefono = TelefonoEntry.Text;
+                _usuario.Nombre = NombreEntry.Text;
+                _usuario.Apellido = ApellidoEntry.Text;
+                _usuario.FechaNacimiento = DateEntry.Date;
+                _usuario.NumeroTelefono = TelefonoEntry.Text;
 
-                string respuesta = await servicioUsuario.AnyadirOActualizarUsuario(usuario);
-
-                if (ubicacion != null)
+                //validación numero de telefono
+                if (_usuario.NumeroTelefono.Length != 9 || _usuario.NumeroTelefono.Contains("-"))
                 {
-                    ubicacion.IdUsuario = servicioUsuario.IdUsuario;
-                    await _servicioUbicacion.InsertarOActualizarUbicacion(ubicacion);
+                    await DisplayAlert("Campos vacíos", "Por favor, Inserte un numero de telefono válido.", "ACEPTAR");
+                    return; // Salir del método sin guardar los datos
                 }
 
-                await _Navigation.PushAsync(new VistaProductos(servicioUsuario.IdUsuario));
+                string respuesta = await _servicioUsuario.AnyadirOActualizarUsuario(_usuario);
+
+                if (_ubicacion != null)
+                {
+                    _ubicacion.IdUsuario = _servicioUsuario.IdUsuario;
+                    await _servicioUbicacion.InsertarOActualizarUbicacion(_ubicacion);
+                }
+
+                await _Navigation.PushAsync(new VistaProductos(_servicioUsuario.IdUsuario));
             }
             catch (Exception ex)
             {
                 // Manejar la excepción aquí, ya sea mostrando un mensaje de error o realizando alguna otra acción
-                await DisplayAlert("Error", $"Ocurrió un error al guardar los datos: {ex.Message}", "Aceptar");
+                await DisplayAlert("Error", $"Ocurrió un error al guardar los datos: {ex.Message}", "ACEPTAR");
             }
         }
 
 
         /// <summary>
-        /// Navega a la página de detalles del producto
+        /// Navega a la página de detalles del _producto
         /// </summary>
         private async void OnCardTapped(object sender, EventArgs e)
         {
@@ -466,7 +475,7 @@ namespace AlkilaApp
                 var frame = (Frame)sender;
                 var producto = frame.BindingContext as Producto;
 
-                var detallesProductoPage = new DetallesProducto(servicioUsuario.IdUsuario, producto, esProductoDelUsuario: false);
+                var detallesProductoPage = new DetallesProducto(_servicioUsuario.IdUsuario, producto, esProductoDelUsuario: false);
                 await Navigation.PushAsync(detallesProductoPage);
             }
             catch (Exception ex)
@@ -495,7 +504,7 @@ namespace AlkilaApp
                     var imageUrl = await _helperFoto.AddFoto(stream, fileName);
                     if (imageUrl != null)
                     {
-                        usuario.Foto = imageUrl;
+                        _usuario.Foto = imageUrl;
                         boton_foto_perfil.Source = imageUrl;
                     }
                     else
@@ -521,7 +530,7 @@ namespace AlkilaApp
         {
             Dispatcher.Dispatch(async () =>
             {
-                await Navigation.PushAsync(new VistaProductos(servicioUsuario.IdUsuario));
+                await Navigation.PushAsync(new VistaProductos(_servicioUsuario.IdUsuario));
             });
 
             return true;
@@ -542,7 +551,7 @@ namespace AlkilaApp
         /// <summary>
         /// Aplica una animación al botón cuando se presiona
         /// </summary>
-        private async Task animaacionButton(object sender, EventArgs e)
+        private async Task animacionButton(object sender, EventArgs e)
         {
             ImageButton button = (ImageButton)sender;
             button.InputTransparent = true;

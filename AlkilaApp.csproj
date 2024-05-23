@@ -49,15 +49,17 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#1C375C"  />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FFFFFF"/>
 		
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\icon_alkila_splash.svg" Color="#1C375C" BaseSize="256,256" />
+		<!-- App Icon -->
+		<MauiSplashScreen Include="Resources\Splash\logo.svg" BaseSize="512,512" Color="#FFFFFF"/>
+
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True"/>
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -102,7 +104,11 @@
 	  <None Remove="Resources\Images\plus-square-button.png" />
 	  <None Remove="Resources\Images\user.png" />
 	  <None Remove="Resources\Images\verified.png" />
-	  <None Remove="Resources\Splash\icon_alkila_splash.svg" />
+	  <None Remove="Resources\Splash\logo.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiSplashScreen Include="Resources\Splash\logo.svg" />
 	</ItemGroup>
 
 	<ItemGroup>

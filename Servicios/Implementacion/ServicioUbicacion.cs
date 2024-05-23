@@ -16,7 +16,7 @@ namespace AlkilaApp
 
         #region Atributos
 
-        private FirebaseClient firebase; // Cliente Firebase para interactuar con la base de datos
+        private FirebaseClient _firebase; // Cliente Firebase para interactuar con la base de datos
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace AlkilaApp
         public ServicioUbicacion()
         {
             // Inicialización del cliente Firebase con la URL de la base de datos y el token de autenticación
-            firebase = new FirebaseClient(Setting.FireBaseDatabaseUrl, new FirebaseOptions
+            _firebase = new FirebaseClient(Setting.FireBaseDatabaseUrl, new FirebaseOptions
             {
                 AuthTokenAsyncFactory = () => Task.FromResult(Setting.FireBaseSeceret)
             });
@@ -41,22 +41,22 @@ namespace AlkilaApp
         #region Metodos
 
         /// <summary>
-        /// Inserta o actualiza la ubicación de un usuario en la base de datos.
+        /// Inserta o actualiza la ubicación de un _usuario en la base de datos.
         /// </summary>
-        /// <param name="ubicacion">Objeto Ubicacion que contiene la información de la ubicación del usuario.</param>
+        /// <param name="ubicacion">Objeto Ubicacion que contiene la información de la ubicación del _usuario.</param>
         /// <returns>True si la operación se realiza con éxito, false en caso contrario.</returns>
         public async Task<bool> InsertarOActualizarUbicacion(Ubicacion ubicacion)
         {
             try
             {
-                // Verificar que el ID de usuario no sea nulo
+                // Verificar que el ID de _usuario no sea nulo
                 if (ubicacion.IdUsuario != null)
                 {
                     // Insertar o actualizar la ubicación en la base de datos
-                    await firebase.Child("Ubicacion").Child(ubicacion.IdUsuario).PutAsync(ubicacion);
+                    await _firebase.Child("Ubicacion").Child(ubicacion.IdUsuario).PutAsync(ubicacion);
                     return true; // Operación exitosa
                 }
-                return false; // ID de usuario nulo
+                return false; // ID de _usuario nulo
             }
             catch (Exception ex)
             {
@@ -67,16 +67,16 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Obtiene la ubicación de un usuario por su ID.
+        /// Obtiene la ubicación de un _usuario por su ID.
         /// </summary>
-        /// <param name="idUsuario">ID del usuario cuya ubicación se quiere obtener.</param>
-        /// <returns>Objeto Ubicacion que contiene la información de la ubicación del usuario si se encuentra, o null si no se encuentra o hay un error.</returns>
+        /// <param name="idUsuario">ID del _usuario cuya ubicación se quiere obtener.</param>
+        /// <returns>Objeto Ubicacion que contiene la información de la ubicación del _usuario si se encuentra, o null si no se encuentra o hay un error.</returns>
         public async Task<Ubicacion> ObtenerLocalizacionAsync(string idUsuario)
         {
             try
             {
-                // Obtener la ubicación del usuario desde la base de datos
-                var location = await firebase.Child("Ubicacion").Child(idUsuario).OnceSingleAsync<Ubicacion>();
+                // Obtener la ubicación del _usuario desde la base de datos
+                var location = await _firebase.Child("Ubicacion").Child(idUsuario).OnceSingleAsync<Ubicacion>();
                 return location; // Retornar la ubicación
             }
             catch (Exception ex)

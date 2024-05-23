@@ -1,4 +1,6 @@
 ﻿using AlkilaApp.Interfaces;
+using Firebase.Database;
+using Microsoft.Maui.Storage;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -14,10 +16,8 @@ namespace AlkilaApp.Servicios.Implementacion
 
         #region Atributos
 
+        private FirebaseClient _firebase; // Cliente Firebase para interactuar con la base de datos
         private readonly HttpClient _client; // Cliente HTTP para realizar solicitudes
-        private readonly string _graphApiToken; // Token de autenticación para el servicio
-        // Clave de la API para acceder al servicio de WhatsApp
-        private const string apiKey = Setting.ApiKeyWhatsApp;
 
         #endregion
 
@@ -28,8 +28,9 @@ namespace AlkilaApp.Servicios.Implementacion
         /// </summary>
         public ServicioWhatsApp()
         {
+            _firebase = new FirebaseClient(Setting.FireBaseDatabaseUrl);
             _client = new HttpClient(); // Inicializa el cliente HTTP
-            _graphApiToken = apiKey; // Asigna el token de autenticación
+            
         }
 
         #endregion
@@ -72,8 +73,11 @@ namespace AlkilaApp.Servicios.Implementacion
         {
             try
             {
+                // Obtenemos la api key del metodo
+                string apiKey = await ObtenerApiKeyWhatsAppFirebase();
+
                 // Configuración de la autorización de la solicitud HTTP
-                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _graphApiToken);
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
                 // Creación de la solicitud HTTP
                 var request = new HttpRequestMessage(method, url);
@@ -143,9 +147,8 @@ namespace AlkilaApp.Servicios.Implementacion
                         }
                     }
                 }
-                    }
-                };
-
+            }
+        };
                 // Serialización del objeto de mensaje de WhatsApp a JSON
 
                 var json = JsonConvert.SerializeObject(mensajeWhatsApp);
@@ -155,8 +158,9 @@ namespace AlkilaApp.Servicios.Implementacion
 
                 try
                 {
+                    string apiKey = await ObtenerApiKeyWhatsAppFirebase();
                     // Configuración y envío de la solicitud HTTP
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _graphApiToken);
+                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
                     var request = new HttpRequestMessage(HttpMethod.Post, url);
 
                     if (content != null)
@@ -180,6 +184,17 @@ namespace AlkilaApp.Servicios.Implementacion
             return null;
         }
 
+        /// <summary>
+        /// Obtener de la base de datos de _firebase el apikey, en el caso de que venciera la fecha poder acceder a ella sin modificar el código
+        /// </summary>
+        public async Task<string> ObtenerApiKeyWhatsAppFirebase()
+        {
+            var aKey = await _firebase
+                .Child("api_key")
+                .OnceSingleAsync<string>();
+            return aKey;
+        }
+
         #endregion
     }
 
@@ -192,7 +207,7 @@ namespace AlkilaApp.Servicios.Implementacion
     public class MensajeWhatsApp
     {
         /// <summary>
-        /// El producto de mensajería utilizado para enviar el mensaje.
+        /// El _producto de mensajería utilizado para enviar el mensaje.
         /// </summary>
         public string messaging_product { get; set; }
 

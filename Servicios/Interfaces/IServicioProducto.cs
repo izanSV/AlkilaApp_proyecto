@@ -17,40 +17,40 @@ namespace AlkilaApp.Servicios.Interfaces
 
 
         /// <summary>
-        /// Obtiene un producto por su ID.
+        /// Obtiene un _producto por su ID.
         /// </summary>
-        /// <param name="idProducto">El ID del producto a obtener.</param>
-        /// <returns>Una tarea que representa la operación asincrónica. La tarea devuelve el producto si se encuentra, de lo contrario, devuelve null.</returns>
+        /// <param name="idProducto">El ID del _producto a obtener.</param>
+        /// <returns>Una tarea que representa la operación asincrónica. La tarea devuelve el _producto si se encuentra, de lo contrario, devuelve null.</returns>
         Task<Producto> ObtenerProductoPorId(string idProducto);
 
         /// <summary>
-        /// Elimina un producto por su ID.
+        /// Elimina un _producto por su ID.
         /// </summary>
-        /// <param name="idProducto">El ID del producto a eliminar.</param>
-        /// <returns>Una tarea que representa la operación asincrónica. La tarea devuelve true si se elimina el producto con éxito, de lo contrario, devuelve false.</returns>
+        /// <param name="idProducto">El ID del _producto a eliminar.</param>
+        /// <returns>Una tarea que representa la operación asincrónica. La tarea devuelve true si se elimina el _producto con éxito, de lo contrario, devuelve false.</returns>
         Task<bool> EliminarProductoPorId(string idProducto);
 
         /// <summary>
         /// Obtiene una lista de productos de usuarios que no están logeados actualmente.
         /// </summary>
-        /// <param name="idUsuarioActual">El ID del usuario actualmente logeado.</param>
+        /// <param name="idUsuarioActual">El ID del _usuario actualmente logeado.</param>
         /// <returns>Una tarea que representa la operación asincrónica. La tarea devuelve una lista de productos si tiene éxito, de lo contrario, devuelve null.</returns>
         Task<List<Producto>> ObtenerProductosUsuariosNoLogeados(string idUsuarioActual);
 
         /// <summary>
         /// Obtiene una lista de productos de un determinado tipo.
         /// </summary>
-        /// <param name="tipoProducto">El tipo de producto.</param>
-        /// <param name="idUsuarioActual">El ID del usuario actualmente logeado.</param>
+        /// <param name="tipoProducto">El tipo de _producto.</param>
+        /// <param name="idUsuarioActual">El ID del _usuario actualmente logeado.</param>
         /// <returns>Una tarea que representa la operación asincrónica. La tarea devuelve una lista de productos si tiene éxito, de lo contrario, devuelve null.</returns>
         Task<List<Producto>> ObtenerListaProductosPorTipo(TipoProducto tipoProducto, string idUsuarioActual);
 
         /// <summary>
-        /// Actualiza un producto asociado a un usuario.
+        /// Actualiza un _producto asociado a un _usuario.
         /// </summary>
-        /// <param name="producto">El producto a actualizar.</param>
-        /// <param name="idUsuario">El ID del usuario asociado al producto.</param>
-        /// <returns>Una tarea que representa la operación asincrónica. La tarea devuelve true si se actualiza el producto con éxito, de lo contrario, devuelve false.</returns>
+        /// <param name="producto">El _producto a actualizar.</param>
+        /// <param name="idUsuario">El ID del _usuario asociado al _producto.</param>
+        /// <returns>Una tarea que representa la operación asincrónica. La tarea devuelve true si se actualiza el _producto con éxito, de lo contrario, devuelve false.</returns>
         Task<bool> ActualizarProductoAUsuario(Producto producto, string idUsuario);
     }
 }

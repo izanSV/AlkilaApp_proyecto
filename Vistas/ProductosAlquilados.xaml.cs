@@ -9,19 +9,19 @@ namespace AlkilaApp.Vistas
         #region Atributos
 
         /// <summary>
-        /// Servicio de usuario
+        /// Servicio de _usuario
         /// </summary>
-        private ServicioUsuario servicioUsuario = new ServicioUsuario();
+        private ServicioUsuario _servicioUsuario = new ServicioUsuario();
 
         /// <summary>
-        /// Servicio de alquiler
+        /// Servicio de _alquiler
         /// </summary>
-        private ServicioAlquiler servicioAlquilar = new ServicioAlquiler();
+        private ServicioAlquiler _servicioAlquilar = new ServicioAlquiler();
 
         /// <summary>
-        /// Servicio de producto
+        /// Servicio de _producto
         /// </summary>
-        private ServicioProducto servicioProducto = new ServicioProducto();
+        private ServicioProducto _servicioProducto = new ServicioProducto();
 
         #endregion
 
@@ -30,10 +30,10 @@ namespace AlkilaApp.Vistas
         /// <summary>
         /// Constructor de la clase ProductosAlquilados
         /// </summary>
-        /// <param name="id">ID del usuario</param>
+        /// <param name="id">ID del _usuario</param>
         public ProductosAlquilados(string id)
         {
-            servicioUsuario.IdUsuario = id;
+            _servicioUsuario.IdUsuario = id;
             InitializeComponent();
 
             textoNoHayProductos.IsVisible = false;
@@ -53,7 +53,7 @@ namespace AlkilaApp.Vistas
 
             try
             {
-                List<Alquiler> listaProductosAlquilados = await servicioAlquilar.GetAlquileresByUsuarioCompradorYVendedorId(servicioUsuario.IdUsuario);
+                List<Alquiler> listaProductosAlquilados = await _servicioAlquilar.GetAlquileresByUsuarioCompradorYVendedorId(_servicioUsuario.IdUsuario);
 
                 if (listaProductosAlquilados.Count > 0)
                 {
@@ -61,7 +61,7 @@ namespace AlkilaApp.Vistas
 
                     foreach (Alquiler item in listaProductosAlquilados)
                     {
-                        if (item.EstadoAlquiler == Estado.Pendiente || item.IdUsuarioVendedor.Equals(servicioUsuario.IdUsuario))
+                        if (item.EstadoAlquiler == Estado.Pendiente || item.IdUsuarioVendedor.Equals(_servicioUsuario.IdUsuario))
                         {
                             await ComprobarProductosAlquilados(item);
                         }
@@ -93,38 +93,37 @@ namespace AlkilaApp.Vistas
         {
             try
             {
-                Producto producto = await servicioProducto.ObtenerProductoPorId(item.IdProducto);
+                Producto producto = await _servicioProducto.ObtenerProductoPorId(item.IdProducto);
 
-                if (item.EstadoAlquiler.Equals(Estado.Pendiente) && item.IdUsuarioVendedor.Equals(servicioUsuario.IdUsuario))
+                if (item.EstadoAlquiler.Equals(Estado.Pendiente) && item.IdUsuarioVendedor.Equals(_servicioUsuario.IdUsuario))
                 {
-                    var resultado = await DisplayAlert("¿Alquilar producto?", "", "ACEPTAR", "CANCELAR");
+                    var resultado = await DisplayAlert("¿Alquilar producto?", "Quieres alquilar el producto " + item.NombreProductoAlquilado + " por " + item.PrecioTotal + "€", "ACEPTAR", "CANCELAR");
 
                     if (resultado)
                     {
                         item.EstadoAlquiler = Estado.Aceptado;
                         producto.EstaAlquilado = true;
-                        await servicioProducto.ActualizarProductoAUsuario(producto, servicioUsuario.IdUsuario);
-                        await servicioAlquilar.InsertarOAlquilarAlquiler(item);
+                        await _servicioProducto.ActualizarProductoAUsuario(producto, _servicioUsuario.IdUsuario);
+                        await _servicioAlquilar.InsertarOAlquilarAlquiler(item);
 
                     }
                     else
                     {
                         item.EstadoAlquiler = Estado.Cancelado;
-                        await servicioAlquilar.InsertarOAlquilarAlquiler(item);
+                        await _servicioAlquilar.InsertarOAlquilarAlquiler(item);
                     }
 
                     ServicioWhatsApp servicioWhatsApp = new ServicioWhatsApp();
-                    Usuario usuario = await servicioUsuario.ObtenerUsuarioPorId(item.IdUsuarioVendedor);
-                    Usuario otroUsuario = await servicioUsuario.ObtenerUsuarioPorId(item.IdUsuarioComprador);
+                    Usuario usuario = await _servicioUsuario.ObtenerUsuarioPorId(item.IdUsuarioVendedor);
+                    Usuario otroUsuario = await _servicioUsuario.ObtenerUsuarioPorId(item.IdUsuarioComprador);
 
 
                     string respuesta = resultado ? "aceptado" : "denegado";
 
                     string detalleAlquiler = $"{usuario.Nombre} ha {respuesta} alquilar el producto {producto.Nombre}, precio: {item.PrecioTotal}€, hasta el día: {item.FechaFin} con el código {item.IdAlquiler}";
 
-                    string imagen = Setting.FotoWhatsApp;
-
                     await servicioWhatsApp.EnviarPlantilla(otroUsuario.NumeroTelefono,detalleAlquiler);
+                    await CargarListaProductos();
                 }
             }
             catch (Exception ex)

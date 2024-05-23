@@ -4,14 +4,14 @@ using System.Collections.Generic;
 namespace AlkilaApp.Modelos
 {
     /// <summary>
-    /// Clase que representa un alquiler.
+    /// Clase que representa un _alquiler.
     /// </summary>
     public class Alquiler
     {
-        private DateTime _FechaInicio; // Campo privado para almacenar la fecha de inicio del alquiler.
+        private DateTime _FechaInicio; // Campo privado para almacenar la fecha de inicio del _alquiler.
 
         /// <summary>
-        /// Fecha de inicio del alquiler.
+        /// Fecha de inicio del _alquiler.
         /// </summary>
         public DateTime FechaInicio
         {
@@ -22,10 +22,10 @@ namespace AlkilaApp.Modelos
             }
         }
 
-        private DateTime _FechaFin; // Campo privado para almacenar la fecha de fin del alquiler.
+        private DateTime _FechaFin; // Campo privado para almacenar la fecha de fin del _alquiler.
 
         /// <summary>
-        /// Fecha de fin del alquiler.
+        /// Fecha de fin del _alquiler.
         /// </summary>
         public DateTime FechaFin
         {
@@ -36,120 +36,120 @@ namespace AlkilaApp.Modelos
             }
         }
 
-        private string _IdProducto; // Campo privado para almacenar el ID del producto alquilado.
+        private string _IdProducto; // Campo privado para almacenar el ID del _producto alquilado.
 
         /// <summary>
-        /// ID del producto alquilado.
+        /// ID del _producto alquilado.
         /// </summary>
         public string IdProducto
         {
             get => _IdProducto;
             set
             {
-                _IdProducto = value; // Se asigna el valor ingresado al ID del producto alquilado.
+                _IdProducto = value; // Se asigna el valor ingresado al ID del _producto alquilado.
             }
         }
 
-        private string _IdAlquiler; // Campo privado para almacenar el ID del alquiler.
+        private string _IdAlquiler; // Campo privado para almacenar el ID del _alquiler.
 
         /// <summary>
-        /// ID del alquiler.
+        /// ID del _alquiler.
         /// </summary>
         public string IdAlquiler
         {
             get => _IdAlquiler;
             set
             {
-                _IdAlquiler = value; // Se asigna el valor ingresado al ID del alquiler.
+                _IdAlquiler = value; // Se asigna el valor ingresado al ID del _alquiler.
             }
         }
 
-        private string _IdUsuarioComprador; // Campo privado para almacenar el ID del usuario comprador.
+        private string _IdUsuarioComprador; // Campo privado para almacenar el ID del _usuario comprador.
 
         /// <summary>
-        /// ID del usuario comprador.
+        /// ID del _usuario comprador.
         /// </summary>
         public string IdUsuarioComprador
         {
             get => _IdUsuarioComprador;
             set
             {
-                _IdUsuarioComprador = value; // Se asigna el valor ingresado al ID del usuario comprador.
+                _IdUsuarioComprador = value; // Se asigna el valor ingresado al ID del _usuario comprador.
             }
         }
 
-        private string _IdUsuarioVendedor; // Campo privado para almacenar el ID del usuario vendedor.
+        private string _IdUsuarioVendedor; // Campo privado para almacenar el ID del _usuario vendedor.
 
         /// <summary>
-        /// ID del usuario vendedor.
+        /// ID del _usuario vendedor.
         /// </summary>
         public string IdUsuarioVendedor
         {
             get => _IdUsuarioVendedor;
             set
             {
-                _IdUsuarioVendedor = value; // Se asigna el valor ingresado al ID del usuario vendedor.
+                _IdUsuarioVendedor = value; // Se asigna el valor ingresado al ID del _usuario vendedor.
             }
         }
 
-        private string _NombreProductoAlquilado; // Campo privado para almacenar el nombre del producto alquilado.
+        private string _NombreProductoAlquilado; // Campo privado para almacenar el nombre del _producto alquilado.
 
         /// <summary>
-        /// Nombre del producto alquilado.
+        /// Nombre del _producto alquilado.
         /// </summary>
         public string NombreProductoAlquilado
         {
             get => _NombreProductoAlquilado;
             set
             {
-                _NombreProductoAlquilado = value; // Se asigna el valor ingresado al nombre del producto alquilado.
+                _NombreProductoAlquilado = value; // Se asigna el valor ingresado al nombre del _producto alquilado.
             }
         }
 
-        private string _FotoProductoAlquilado; // Campo privado para almacenar la foto del producto alquilado.
+        private string _FotoProductoAlquilado; // Campo privado para almacenar la foto del _producto alquilado.
 
         /// <summary>
-        /// Foto del producto alquilado.
+        /// Foto del _producto alquilado.
         /// </summary>
         public string FotoProductoAlquilado
         {
             get => _FotoProductoAlquilado;
             set
             {
-                _FotoProductoAlquilado = value; // Se asigna el valor ingresado a la foto del producto alquilado.
+                _FotoProductoAlquilado = value; // Se asigna el valor ingresado a la foto del _producto alquilado.
             }
         }
 
-        private double _PrecioTotal; // Campo privado para almacenar el precio total del alquiler.
+        private double _PrecioTotal; // Campo privado para almacenar el precio total del _alquiler.
 
         /// <summary>
-        /// Precio total del alquiler.
+        /// Precio total del _alquiler.
         /// </summary>
         public double PrecioTotal
         {
             get => _PrecioTotal;
             set
             {
-                _PrecioTotal = value; // Se asigna el valor ingresado al precio total del alquiler.
+                _PrecioTotal = value; // Se asigna el valor ingresado al precio total del _alquiler.
             }
         }
 
-        private string _NombreUsuarioComprador; // Campo privado para almacenar el nombre del usuario comprador.
+        private string _NombreUsuarioComprador; // Campo privado para almacenar el nombre del _usuario comprador.
 
         /// <summary>
-        /// Nombre del usuario comprador.
+        /// Nombre del _usuario comprador.
         /// </summary>
         public string NombreUsuarioComprador
         {
             get => _NombreUsuarioComprador;
             set
             {
-                _NombreUsuarioComprador = value; // Se asigna el valor ingresado al nombre del usuario comprador.
+                _NombreUsuarioComprador = value; // Se asigna el valor ingresado al nombre del _usuario comprador.
             }
         }
 
         /// <summary>
-        /// Estado del alquiler.
+        /// Estado del _alquiler.
         /// </summary>
         public Estado EstadoAlquiler { get; set; }
 
@@ -171,7 +171,7 @@ namespace AlkilaApp.Modelos
 
 
     /// <summary>
-    /// Enumeración que representa el estado del alquiler.
+    /// Enumeración que representa el estado del _alquiler.
     /// </summary>
     public enum Estado
     {

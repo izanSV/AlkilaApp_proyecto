@@ -70,7 +70,7 @@
                                     <!-- Define los cambios en el botón cuando está presionado -->
 
                                     <Setter Property="Scale" Value="0.9" />
-                                    <!-- Por ejemplo, puedes cambiar el color de fondo -->
+                                   
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>

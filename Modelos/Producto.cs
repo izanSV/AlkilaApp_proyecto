@@ -3,12 +3,12 @@
 namespace AlkilaApp.Modelos
 {
     /// <summary>
-    /// Clase que representa un producto en el sistema.
+    /// Clase que representa un _producto en el sistema.
     /// </summary>
     public class Producto
     {
         /// <summary>
-        /// Identificador único del producto.
+        /// Identificador único del _producto.
         /// </summary>
         private string? _IdProducto;
         public string IdProducto
@@ -21,7 +21,7 @@ namespace AlkilaApp.Modelos
         }
 
         /// <summary>
-        /// Nombre del producto.
+        /// Nombre del _producto.
         /// </summary>
         private string? _Nombre;
         public string Nombre
@@ -34,7 +34,7 @@ namespace AlkilaApp.Modelos
         }
 
         /// <summary>
-        /// Descripción del producto.
+        /// Descripción del _producto.
         /// </summary>
         private string? _DescripcionProducto;
         public string DescripcionProducto
@@ -47,7 +47,7 @@ namespace AlkilaApp.Modelos
         }
 
         /// <summary>
-        /// Precio del producto.
+        /// Precio del _producto.
         /// </summary>
         private double _Precio;
         public double Precio
@@ -60,7 +60,7 @@ namespace AlkilaApp.Modelos
         }
 
         /// <summary>
-        /// URL de la foto del producto.
+        /// URL de la foto del _producto.
         /// </summary>
         private string? _Foto;
         public string Foto
@@ -73,7 +73,7 @@ namespace AlkilaApp.Modelos
         }
 
         /// <summary>
-        /// Indica si el producto está actualmente alquilado.
+        /// Indica si el _producto está actualmente alquilado.
         /// </summary>
         private bool _estaAlquilado;
         public bool EstaAlquilado
@@ -86,12 +86,12 @@ namespace AlkilaApp.Modelos
         }
 
         /// <summary>
-        /// Tipo de producto.
+        /// Tipo de _producto.
         /// </summary>
         public TipoProducto Tipo { get; set; }
 
         /// <summary>
-        /// Valoración del producto.
+        /// Valoración del _producto.
         /// </summary>
         private double? _Valoracion;
         public double? Valoracion
@@ -117,7 +117,7 @@ namespace AlkilaApp.Modelos
         }
 
         /// <summary>
-        /// Total de usuarios que han valorado el producto.
+        /// Total de usuarios que han valorado el _producto.
         /// </summary>
         private int? _TotalUsuariosValorados;
         public int? TotalUsuariosValorados

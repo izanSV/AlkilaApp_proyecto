@@ -18,7 +18,7 @@ namespace AlkilaApp
         public EditarDatosUsuario _editarDatosUsuario;
         public Helpers _helperFoto = new Helpers();
 
-        // Variable para controlar que el usuario pueda volver a la página anterior en el caso de que quiera añadir un producto
+        // Variable para controlar que el _usuario pueda volver a la página anterior en el caso de que quiera añadir un _producto
         private bool _paginaDetalleProducto = true;
 
         #endregion
@@ -28,7 +28,7 @@ namespace AlkilaApp
         /// <summary>
         /// Constructor de la clase AnyadirProductos.
         /// </summary>
-        /// <param name="id">ID del usuario actual.</param>
+        /// <param name="id">ID del _usuario actual.</param>
         public AnyadirProductos(string id)
         {
             NavigationPage.SetHasBackButton(this, true);
@@ -52,7 +52,7 @@ namespace AlkilaApp
         #region Métodos
 
         /// <summary>
-        /// Carga los datos del producto a editar.
+        /// Carga los datos del _producto a editar.
         /// </summary>
         /// <param name="prodEdit">Producto a editar.</param>
         public async void CargarDatosProductos(Producto prodEdit)
@@ -76,12 +76,13 @@ namespace AlkilaApp
             }
             catch (Exception e)
             {
-                throw new Exception("Error al cargar los datos del producto.", e);
+                throw new Exception("Error al cargar los datos del _producto.", e);
             }
         }
 
+
         /// <summary>
-        /// Guarda los datos del producto.
+        /// Guarda los datos del _producto.
         /// </summary>
         /// <returns>Task representando la operación asincrónica.</returns>
         public async Task GuardarDatosProducto()
@@ -92,13 +93,7 @@ namespace AlkilaApp
                 return;
             }
 
-           if (boton_foto_perfil.Source.Equals(""))
-            {
-                await DisplayAlert("Error", "Por favor, Selecciona una imagen de la galería.", "ACEPTAR");
-                return; 
-            }
-
-
+          
             if (double.TryParse(PrecioEntry.Text, out double precio) && TipoProductoPicker.SelectedItem != null)
             {
                 producto.IdProducto = Guid.NewGuid().ToString();
@@ -111,6 +106,20 @@ namespace AlkilaApp
                 producto.TotalValoracionProductos = 0;
                 producto.Tipo = Enum.Parse<TipoProducto>(TipoProductoPicker.SelectedItem.ToString());
 
+
+                if (precio <= 0.00)
+                {
+                    await DisplayAlert("Error", "Por favor, Selecciona un precio válido.", "ACEPTAR");
+                    return;
+                }
+
+
+                if (string.IsNullOrEmpty(producto.Foto))
+                {
+                    await DisplayAlert("Error", "Por favor, Selecciona una imagen de la galería.", "ACEPTAR");
+                    return;
+                }
+
                 string respuesta = await servicioUsuario.AgregarProductoAUsuario(producto);
 
                 if (producto != null)
@@ -119,6 +128,7 @@ namespace AlkilaApp
                     await _editarDatosUsuario.CargarMiListaProductos();
                     await Navigation.PushAsync(new EditarDatosUsuario(this.Navigation, servicioUsuario.IdUsuario));
                 }
+
             }
             else
             {
@@ -139,7 +149,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Edita los datos del producto.
+        /// Edita los datos del _producto.
         /// </summary>
         public async void EditarDatosProducto()
         {
@@ -150,12 +160,21 @@ namespace AlkilaApp
                 producto.Precio = precio;
                 producto.Tipo = Enum.Parse<TipoProducto>(TipoProductoPicker.SelectedItem.ToString());
 
+                if (precio <= 0.00)
+                {
+                    await DisplayAlert("Error", "Por favor, Selecciona un precio válido.", "ACEPTAR");
+                    return;
+                }
+
                 await servicioProducto.ActualizarProductoAUsuario(producto, servicioUsuario.IdUsuario);
                 await _editarDatosUsuario.CargarMiListaProductos();
+
+                await DisplayAlert("Información", "Producto editado correctamente.", "ACEPTAR");
             }
+
             else
             {
-                await DisplayAlert("Error", "El precio ingresado no es válido o no se ha seleccionado un tipo de producto.", "ACEPTAR");
+                await DisplayAlert("Error", "No se ha seleccionado un tipo de producto.", "ACEPTAR");
             }
         }
 
@@ -221,7 +240,7 @@ namespace AlkilaApp
             {
                 try
                 {
-                    await Botones.animaacionImageButton(sender, e);
+                    await Botones.animacionImageButton(sender, e);
                     await Navigation.PushAsync(new VistaProductos(servicioUsuario.IdUsuario));
                 }
                 catch (Exception ex)
@@ -240,7 +259,7 @@ namespace AlkilaApp
             {
                 try
                 {
-                    await Botones.animaacionImageButton(sender, e);
+                    await Botones.animacionImageButton(sender, e);
                     await GuardarDatosProducto();
                 }
                 catch (Exception ex)
@@ -259,7 +278,7 @@ namespace AlkilaApp
             {
                 try
                 {
-                    await Botones.animaacionImageButton(sender, e);
+                    await Botones.animacionImageButton(sender, e);
                     EditarDatosProducto();
                     await Navigation.PushAsync(_editarDatosUsuario);
                 }
@@ -269,7 +288,7 @@ namespace AlkilaApp
                 }
             }
 
-            await Botones.animaacionImageButton(sender, e);
+            await Botones.animacionImageButton(sender, e);
         }
 
         #endregion

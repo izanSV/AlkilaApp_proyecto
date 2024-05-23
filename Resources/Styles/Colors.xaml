@@ -8,8 +8,8 @@
 
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#bc3895</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
+    <Color x:Key="PrimaryDarkText">White</Color>
+    <Color x:Key="Secondary">#E1E1E1</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
 

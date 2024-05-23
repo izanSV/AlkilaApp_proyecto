@@ -30,7 +30,7 @@ namespace AlkilaApp.Modelos
         private string calle;
 
         /// <summary>
-        /// Identificador del usuario asociado a la ubicación.
+        /// Identificador del _usuario asociado a la ubicación.
         /// </summary>
         private string idUsuario;
 
@@ -73,7 +73,7 @@ namespace AlkilaApp.Modelos
         }
 
         /// <summary>
-        /// Obtiene o establece el identificador del usuario asociado a la ubicación.
+        /// Obtiene o establece el identificador del _usuario asociado a la ubicación.
         /// </summary>
         public string IdUsuario
         {

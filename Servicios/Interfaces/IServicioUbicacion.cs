@@ -16,10 +16,10 @@ namespace AlkilaApp.Servicios
         Task<bool> InsertarOActualizarUbicacion(Ubicacion ubicacion);
 
         /// <summary>
-        /// Obtiene la ubicación de un usuario por su ID.
+        /// Obtiene la ubicación de un _usuario por su ID.
         /// </summary>
-        /// <param name="idUsuario">El ID del usuario cuya ubicación se quiere obtener.</param>
-        /// <returns>La ubicación del usuario si se encuentra, o null si no se encuentra o hay un error.</returns>
+        /// <param name="idUsuario">El ID del _usuario cuya ubicación se quiere obtener.</param>
+        /// <returns>La ubicación del _usuario si se encuentra, o null si no se encuentra o hay un error.</returns>
         Task<Ubicacion> ObtenerLocalizacionAsync(string idUsuario);
     }
 }

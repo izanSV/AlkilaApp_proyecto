@@ -30,8 +30,6 @@
 
             <!-- ScrollView para el contenido desplazable -->
 
-
-
             <Grid Grid.Row="0" Padding="10,0,10,0"
             HorizontalOptions="FillAndExpand"
             RowSpacing="20"

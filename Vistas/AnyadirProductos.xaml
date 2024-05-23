@@ -6,8 +6,6 @@
     Title="Productos">
 
     
-
-    
     <Grid BackgroundColor="Transparent"
           HorizontalOptions="FillAndExpand"
           VerticalOptions="FillAndExpand">
@@ -59,9 +57,6 @@
                         <Label Text="📦 Tipo de Producto"/>
                         <Picker x:Name="TipoProductoPicker" HorizontalOptions="FillAndExpand" SelectedIndex="0"/>
                     </StackLayout>
-
-
-
 
                     <StackLayout HorizontalOptions="FillAndExpand"  Margin="20">
                         <Label Text="🏷️ Precio por dia" />

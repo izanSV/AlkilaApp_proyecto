@@ -1,12 +1,12 @@
 ﻿namespace AlkilaApp.Modelos
 {
     /// <summary>
-    /// Clase que representa un usuario en el sistema.
+    /// Clase que representa un _usuario en el sistema.
     /// </summary>
     public class Usuario
     {
         /// <summary>
-        /// Identificador único del usuario.
+        /// Identificador único del _usuario.
         /// </summary>
         private string? _IdUsuario;
         public string IdUsuario
@@ -19,7 +19,7 @@
         }
 
         /// <summary>
-        /// Nombre del usuario.
+        /// Nombre del _usuario.
         /// </summary>
         private string? _Nombre;
         public string Nombre
@@ -32,7 +32,7 @@
         }
 
         /// <summary>
-        /// Apellido del usuario.
+        /// Apellido del _usuario.
         /// </summary>
         private string? _Apellido;
         public string Apellido
@@ -45,7 +45,7 @@
         }
 
         /// <summary>
-        /// Número de teléfono del usuario.
+        /// Número de teléfono del _usuario.
         /// </summary>
         private string _NumeroTelefono;
         public string NumeroTelefono
@@ -55,7 +55,7 @@
         }
 
         /// <summary>
-        /// Correo electrónico del usuario.
+        /// Correo electrónico del _usuario.
         /// </summary>
         private string? _CorreoElectronico;
         public string CorreoElectronico
@@ -68,7 +68,7 @@
         }
 
         /// <summary>
-        /// Contraseña del usuario.
+        /// Contraseña del _usuario.
         /// </summary>
         private string _Contrasenya;
         public string Contrasenya
@@ -81,7 +81,7 @@
         }
 
         /// <summary>
-        /// Fecha de nacimiento del usuario.
+        /// Fecha de nacimiento del _usuario.
         /// </summary>
         private DateTime _FechaNacimiento;
         public DateTime FechaNacimiento
@@ -94,7 +94,7 @@
         }
 
         /// <summary>
-        /// URL de la foto del usuario.
+        /// URL de la foto del _usuario.
         /// </summary>
         private string? _Foto;
         public string Foto
@@ -107,7 +107,7 @@
         }
 
         /// <summary>
-        /// Indica si el usuario es una empresa.
+        /// Indica si el _usuario es una empresa.
         /// </summary>
         private bool _EsEmpresa;
         public bool EsEmpresa
@@ -120,7 +120,7 @@
         }
 
         /// <summary>
-        /// Lista de productos asociados al usuario.
+        /// Lista de productos asociados al _usuario.
         /// </summary>
         private List<Producto>? _ListaProductos;
         public List<Producto> ListaProductos

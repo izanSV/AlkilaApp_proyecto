@@ -11,19 +11,19 @@ namespace AlkilaApp
         #region Atributos
 
         /// <summary>
-        /// Servicio de usuario
+        /// Servicio de _usuario
         /// </summary>
-        private ServicioUsuario servicioUsuario;
+        private ServicioUsuario _servicioUsuario;
 
         /// <summary>
-        /// Servicio de alquiler
+        /// Servicio de _alquiler
         /// </summary>
-        private ServicioAlquiler servicioAlquiler;
+        private ServicioAlquiler _servicioAlquiler;
 
         /// <summary>
-        /// Servicio de producto
+        /// Servicio de _producto
         /// </summary>
-        private ServicioProducto servicioProducto = new ServicioProducto();
+        private ServicioProducto _servicioProducto = new ServicioProducto();
 
         /// <summary>
         /// Producto
@@ -42,13 +42,13 @@ namespace AlkilaApp
         /// <summary>
         /// Constructor de la clase VistaProductos
         /// </summary>
-        /// <param name="id">ID del usuario</param>
+        /// <param name="id">ID del _usuario</param>
         public VistaProductos(string id)
         {
             InitializeComponent();
-            servicioUsuario = new ServicioUsuario();
-            servicioAlquiler = new ServicioAlquiler();
-            servicioUsuario.IdUsuario = id;
+            _servicioUsuario = new ServicioUsuario();
+            _servicioAlquiler = new ServicioAlquiler();
+            _servicioUsuario.IdUsuario = id;
         }
 
         #endregion
@@ -62,7 +62,7 @@ namespace AlkilaApp
         {
             try
             {
-                var listaProductos = await servicioProducto.ObtenerProductosUsuariosNoLogeados(servicioUsuario.IdUsuario);
+                var listaProductos = await _servicioProducto.ObtenerProductosUsuariosNoLogeados(_servicioUsuario.IdUsuario);
                 ProductosCollectionView.ItemsSource = listaProductos;
             }
             catch (Exception ex)
@@ -72,7 +72,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Cargar los tipos de producto
+        /// Cargar los tipos de _producto
         /// </summary>
         private void CargarTiposProducto()
         {
@@ -81,10 +81,10 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Verificar si el producto pertenece al usuario registrado
+        /// Verificar si el _producto pertenece al _usuario registrado
         /// </summary>
         /// <param name="producto">Producto</param>
-        /// <returns>Booleano indicando si el producto pertenece al usuario registrado</returns>
+        /// <returns>Booleano indicando si el _producto pertenece al _usuario registrado</returns>
         private bool ProductoPerteneceAlUsuarioRegistrado(Producto producto)
         {
             var listaProductosUsuarioRegistrado = (List<Producto>)ProductosCollectionView.ItemsSource;
@@ -101,14 +101,14 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Verificar el último día de alquiler de un producto
+        /// Verificar el último día de _alquiler de un _producto
         /// </summary>
         /// <returns>Booleano indicando si se cumplió la primera condición</returns>
         private async Task<bool> UltimoDiaProductoAlquilado()
         {
             try
             {
-                List<Alquiler> listaProductosAlquilados = await servicioAlquiler.GetAlquileresByUsuarioCompradorYVendedorId(servicioUsuario.IdUsuario);
+                List<Alquiler> listaProductosAlquilados = await _servicioAlquiler.GetAlquileresByUsuarioCompradorYVendedorId(_servicioUsuario.IdUsuario);
                 bool primeraCondicionCumplida = false;
 
                 foreach (Alquiler item in listaProductosAlquilados)
@@ -126,14 +126,14 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Procesar el alquiler de un producto
+        /// Procesar el _alquiler de un _producto
         /// </summary>
         /// <param name="alquiler">Objeto Alquiler</param>
         /// <param name="primeraCondicionCumplida">Estado de la primera condición</param>
         /// <returns>Booleano indicando si se cumplió la primera condición</returns>
         private async Task<bool> ProcesarAlquiler(Alquiler alquiler, bool primeraCondicionCumplida)
         {
-            if (alquiler.EstadoAlquiler == Estado.Pendiente && alquiler.IdUsuarioVendedor.Equals(servicioUsuario.IdUsuario) && !primeraCondicionCumplida)
+            if (alquiler.EstadoAlquiler == Estado.Pendiente && alquiler.IdUsuarioVendedor.Equals(_servicioUsuario.IdUsuario) && !primeraCondicionCumplida)
             {
 
                 if (alquiler.NoMasRespuesta)
@@ -144,7 +144,7 @@ namespace AlkilaApp
                     if (!respuesta) 
                     { 
                         alquiler.NoMasRespuesta = false;
-                        await servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
+                        await _servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
                     }
 
                 }
@@ -160,12 +160,12 @@ namespace AlkilaApp
 
             Producto producto = await ObtenerProducto(alquiler.IdProducto);
 
-            if (alquiler.EstadoAlquiler == Estado.Enviado && alquiler.IdUsuarioComprador.Equals(servicioUsuario.IdUsuario))
+            if (alquiler.EstadoAlquiler == Estado.Enviado && alquiler.IdUsuarioComprador.Equals(_servicioUsuario.IdUsuario))
             {
                 await ProcesarAlquilerEnviado(alquiler, producto);
             }
 
-            if (alquiler.EstadoAlquiler == Estado.Recibido && alquiler.IdUsuarioVendedor.Equals(servicioUsuario.IdUsuario))
+            if (alquiler.EstadoAlquiler == Estado.Recibido && alquiler.IdUsuarioVendedor.Equals(_servicioUsuario.IdUsuario))
             {
                 await ProcesarAlquilerRecibido(alquiler, producto);
                 
@@ -180,28 +180,28 @@ namespace AlkilaApp
         /// </summary>
         private async Task EliminarAlquilerFinalizado()
         {
-            List<Alquiler> listaProductosAlquilados = await servicioAlquiler.GetAlquileresByUsuarioCompradorYVendedorId(servicioUsuario.IdUsuario);
+            List<Alquiler> listaProductosAlquilados = await _servicioAlquiler.GetAlquileresByUsuarioCompradorYVendedorId(_servicioUsuario.IdUsuario);
             var alquileresFinalizados = listaProductosAlquilados.Where(alquiler => alquiler.EstadoAlquiler == Estado.Finalizado).ToList();
 
             foreach (var alquiler in alquileresFinalizados)
             {
-                await servicioAlquiler.EliminarAlquilerPorId(alquiler.IdAlquiler);
+                await _servicioAlquiler.EliminarAlquilerPorId(alquiler.IdAlquiler);
             }
         }
 
         /// <summary>
-        /// Actualizar el estado de un alquiler
+        /// Actualizar el estado de un _alquiler
         /// </summary>
         /// <param name="item">Objeto Alquiler</param>
-        /// <param name="nuevoEstado">Nuevo estado del alquiler</param>
+        /// <param name="nuevoEstado">Nuevo estado del _alquiler</param>
         private async Task ActualizarEstadoAlquiler(Alquiler item, Estado nuevoEstado)
         {
             item.EstadoAlquiler = nuevoEstado;
-            await servicioAlquiler.InsertarOAlquilarAlquiler(item);
+            await _servicioAlquiler.InsertarOAlquilarAlquiler(item);
         }
 
         /// <summary>
-        /// Procesar alquiler enviado
+        /// Procesar _alquiler enviado
         /// </summary>
         /// <param name="alquiler">Objeto Alquiler</param>
         /// <param name="producto">Objeto Producto</param>
@@ -209,9 +209,9 @@ namespace AlkilaApp
         {
             if (alquiler.EstadoAlquiler == Estado.Enviado)
             {
-                await servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
+                await _servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
 
-                // si el usuario presiona sobre no preguntar mas, entonces se deshabilitara la entrada y no se mostrará mas
+                // si el _usuario presiona sobre no preguntar mas, entonces se deshabilitara la entrada y no se mostrará mas
                 if (!alquiler.NoMasRespuesta)
                 {
                     // inicializamos a true para poder ver el alert
@@ -220,7 +220,7 @@ namespace AlkilaApp
                     if (!respuesta)
                     {
                         alquiler.NoMasRespuesta = false;
-                        await servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
+                        await _servicioAlquiler.InsertarOAlquilarAlquiler(alquiler);
                     }
                 }
                 
@@ -236,7 +236,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Procesar alquiler recibido
+        /// Procesar _alquiler recibido
         /// </summary>
         /// <param name="item">Objeto Alquiler</param>
         /// <param name="producto">Objeto Producto</param>
@@ -247,35 +247,26 @@ namespace AlkilaApp
             if (aceptarProducto)
             {
                 item.EstadoAlquiler = Estado.Finalizado;
-                await servicioAlquiler.InsertarOAlquilarAlquiler(item);
+                await _servicioAlquiler.InsertarOAlquilarAlquiler(item);
 
                 if (producto != null)
                 {
                     producto.EstaAlquilado = false;
-                    await servicioProducto.ActualizarProductoAUsuario(producto, servicioUsuario.IdUsuario);
+                    await _servicioProducto.ActualizarProductoAUsuario(producto, _servicioUsuario.IdUsuario);
                 }
             }
         }
 
         /// <summary>
-        /// Obtener un producto por ID
+        /// Obtener un _producto por ID
         /// </summary>
-        /// <param name="productoId">ID del producto</param>
+        /// <param name="productoId">ID del _producto</param>
         /// <returns>Objeto Producto</returns>
         private async Task<Producto> ObtenerProducto(string productoId)
         {
-            return await servicioProducto.ObtenerProductoPorId(productoId);
+            return await _servicioProducto.ObtenerProductoPorId(productoId);
         }
 
-        /// <summary>
-        /// Mostrar alerta con mensaje
-        /// </summary>
-        /// <param name="mensaje">Mensaje de la alerta</param>
-        private async Task MostrarAlerta(string mensaje)
-        {
-          await DisplayAlert("", mensaje, "ACEPTAR");
-
-        }
 
         /// <summary>
         /// Mostrar alerta con mensaje y confirmación
@@ -283,17 +274,17 @@ namespace AlkilaApp
         /// <param name="mensaje">Mensaje de la alerta</param>
         /// <param name="aceptar">Texto del botón de aceptar</param>
         /// <param name="cancelar">Texto del botón de cancelar</param>
-        /// <returns>Booleano indicando la elección del usuario</returns>
+        /// <returns>Booleano indicando la elección del _usuario</returns>
         private async Task<bool> MostrarAlertaConConfirmacion(string mensaje, string aceptar, string cancelar)
         {
             return await DisplayAlert("", mensaje, aceptar, cancelar);
         }
 
         /// <summary>
-        /// Valorar un producto
+        /// Valorar un _producto
         /// </summary>
         /// <param name="producto">Objeto Producto</param>
-        /// <param name="id">ID del usuario</param>
+        /// <param name="id">ID del _usuario</param>
         private async void ValorarProducto(Producto producto, string id)
         {
             string action = await DisplayActionSheet("¿Cual es la valoración para este producto?", "CANCELAR", "", "1", "2", "3", "4", "5");
@@ -333,7 +324,7 @@ namespace AlkilaApp
                 producto.Valoracion = 0;
             }
 
-            await servicioProducto.ActualizarProductoAUsuario(producto, id);
+            await _servicioProducto.ActualizarProductoAUsuario(producto, id);
             CargarListaProductos();
         }
 
@@ -351,7 +342,7 @@ namespace AlkilaApp
         #region Botones
 
         /// <summary>
-        /// Manejar el evento de tap en una tarjeta de producto
+        /// Manejar el evento de tap en una tarjeta de _producto
         /// </summary>
         /// <param name="sender">Objeto que envía el evento</param>
         /// <param name="e">Argumentos del evento</param>
@@ -363,20 +354,20 @@ namespace AlkilaApp
 
             if (producto != null && ProductoPerteneceAlUsuarioRegistrado(producto))
             {
-                var detallesProductoPage = new DetallesProducto(servicioUsuario.IdUsuario, producto, esProductoDelUsuario: true);
+                var detallesProductoPage = new DetallesProducto(_servicioUsuario.IdUsuario, producto, esProductoDelUsuario: true);
                 await Navigation.PushAsync(detallesProductoPage);
                 frame.IsEnabled = true;
             }
             else
             {
-                var detallesProductoPage = new DetallesProducto(servicioUsuario.IdUsuario, producto, esProductoDelUsuario: false);
+                var detallesProductoPage = new DetallesProducto(_servicioUsuario.IdUsuario, producto, esProductoDelUsuario: false);
                 await Navigation.PushAsync(detallesProductoPage);
                 frame.IsEnabled = true;
             }
         }
 
         /// <summary>
-        /// Manejar el evento de tap en un tipo de producto
+        /// Manejar el evento de tap en un tipo de _producto
         /// </summary>
         /// <param name="sender">Objeto que envía el evento</param>
         /// <param name="e">Argumentos del evento</param>
@@ -397,14 +388,14 @@ namespace AlkilaApp
 
                 string? item = frame.BindingContext as string;
                 var tipoProducto = (TipoProducto)Enum.Parse(typeof(TipoProducto), item);
-                var listaProductos = await servicioProducto.ObtenerListaProductosPorTipo(tipoProducto, servicioUsuario.IdUsuario);
+                var listaProductos = await _servicioProducto.ObtenerListaProductosPorTipo(tipoProducto, _servicioUsuario.IdUsuario);
 
                 ProductosCollectionView.ItemsSource = listaProductos;
             }
         }
 
         /// <summary>
-        /// Manejar el evento de clic en el botón de añadir producto
+        /// Manejar el evento de clic en el botón de añadir _producto
         /// </summary>
         /// <param name="sender">Objeto que envía el evento</param>
         /// <param name="e">Argumentos del evento</param>
@@ -415,8 +406,8 @@ namespace AlkilaApp
                 try
                 {
                     IsEnabled = false;
-                    await Botones.animaacionImageButton(sender, e);
-                    await Navigation.PushAsync(new AnyadirProductos(servicioUsuario.IdUsuario));
+                    await Botones.animacionImageButton(sender, e);
+                    await Navigation.PushAsync(new AnyadirProductos(_servicioUsuario.IdUsuario));
                     IsEnabled = true;
                 }
                 catch (Exception ex)
@@ -437,8 +428,10 @@ namespace AlkilaApp
             {
                 try
                 {
-                    await Botones.animaacionImageButton(sender, e);
-                    await Navigation.PushAsync(new ProductosAlquilados(servicioUsuario.IdUsuario));
+                    IsEnabled = false;
+                    await Botones.animacionImageButton(sender, e);
+                    await Navigation.PushAsync(new ProductosAlquilados(_servicioUsuario.IdUsuario));
+                    IsEnabled = true;
                 }
                 catch (Exception ex)
                 {
@@ -448,7 +441,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Manejar el evento de clic en el botón de mostrar datos del usuario
+        /// Manejar el evento de clic en el botón de mostrar datos del _usuario
         /// </summary>
         /// <param name="sender">Objeto que envía el evento</param>
         /// <param name="e">Argumentos del evento</param>
@@ -458,8 +451,10 @@ namespace AlkilaApp
             {
                 try
                 {
-                    await Botones.animaacionImageButton(sender, e);
-                    await Navigation.PushAsync(new EditarDatosUsuario(this.Navigation, servicioUsuario.IdUsuario));
+                    IsEnabled=false;
+                    await Botones.animacionImageButton(sender, e);
+                    await Navigation.PushAsync(new EditarDatosUsuario(this.Navigation, _servicioUsuario.IdUsuario));
+                    IsEnabled=true;
                 }
                 catch (Exception ex)
                 {
@@ -479,8 +474,10 @@ namespace AlkilaApp
             {
                 try
                 {
-                    await Botones.animaacionImageButton(sender, e);
-                    await Navigation.PushAsync(new VistaProductos(servicioUsuario.IdUsuario));
+                    IsEnabled=false;
+                    await Botones.animacionImageButton(sender, e);
+                    await Navigation.PushAsync(new VistaProductos(_servicioUsuario.IdUsuario));
+                    IsEnabled = true;
                 }
                 catch (Exception ex)
                 {

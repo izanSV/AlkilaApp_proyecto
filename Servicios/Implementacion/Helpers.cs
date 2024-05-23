@@ -6,8 +6,6 @@ namespace AlkilaApp.Servicios.Implementacion
     public class Helpers
     {
         
-
-
         /// <summary>
         /// Sube una imagen a Firebase Storage.
         /// </summary>
@@ -45,6 +43,11 @@ namespace AlkilaApp.Servicios.Implementacion
             }
         }
 
+        /// <summary>
+        /// Elimina una imagen a Firebase Storage.
+        /// </summary>
+        /// <param name="imageUrl">Ruta donde está almacenada la imagen en _firebase.</param>
+        
         public async Task<bool> DeleteFoto(string imageUrl)
         {
             try
@@ -84,9 +87,5 @@ namespace AlkilaApp.Servicios.Implementacion
             }
         }
 
-
- 
-
-        
     }
 }

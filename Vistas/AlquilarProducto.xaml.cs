@@ -10,19 +10,19 @@ namespace AlkilaApp
         /// <summary>
         /// Objeto Servicio Alquiler
         /// </summary>
-        private ServicioAlquiler servicioAlquilar = new ServicioAlquiler();
+        private ServicioAlquiler _servicioAlquilar = new ServicioAlquiler();
         /// <summary>
         /// Objeto ServicioUsuario
         /// </summary>
-        private ServicioUsuario servicioUsuario = new ServicioUsuario();
+        private ServicioUsuario _servicioUsuario = new ServicioUsuario();
         /// <summary>
-        /// Objeto producto
+        /// Objeto _producto
         /// </summary>
-        private Producto producto = new Producto();
+        private Producto _producto = new Producto();
         /// <summary>
-        /// Objeto alquiler
+        /// Objeto _alquiler
         /// </summary>
-        private Alquiler alquiler = new Alquiler();
+        private Alquiler _alquiler = new Alquiler();
         /// <summary>
         /// Objeto Aplicar cambios 
         /// </summary>
@@ -36,12 +36,12 @@ namespace AlkilaApp
         /// <summary>
         /// Constructor de la clase AlquilarProducto.
         /// </summary>
-        /// <param name="id">ID del usuario.</param>
+        /// <param name="id">ID del _usuario.</param>
         /// <param name="usuario">Objeto Usuario que realiza la compra.</param>
         /// <param name="pro">Objeto Producto que se alquila.</param>
         public AlquilarProducto(string? id, Usuario usuario, Producto pro)
         {
-            // Obtenemos los datos temporales del producto con el usuario comprador y vendedor
+            // Obtenemos los datos temporales del _producto con el _usuario comprador y vendedor
             InitializeComponent();
 
             // El botón de los términos y condiciones, al iniciar la app, quiero que este inactivo, al presionar cambiará el estado
@@ -49,16 +49,16 @@ namespace AlkilaApp
             checkBox.IsEnabled = false;
             btnLeerCondicion.IsEnabled = false;
 
-            servicioUsuario.IdUsuario = id;
-            alquiler.IdUsuarioComprador = id;
-            alquiler.IdUsuarioVendedor = usuario.IdUsuario;
-            alquiler.IdProducto = pro.IdProducto;
-            alquiler.NombreProductoAlquilado = pro.Nombre;
-            alquiler.FotoProductoAlquilado = pro.Foto;
-            alquiler.NombreUsuarioComprador = usuario.Nombre;
+            _servicioUsuario.IdUsuario = id;
+            _alquiler.IdUsuarioComprador = id;
+            _alquiler.IdUsuarioVendedor = usuario.IdUsuario;
+            _alquiler.IdProducto = pro.IdProducto;
+            _alquiler.NombreProductoAlquilado = pro.Nombre;
+            _alquiler.FotoProductoAlquilado = pro.Foto;
+            _alquiler.NombreUsuarioComprador = usuario.Nombre;
 
-            // Obtenemos los datos del producto obtenido por el usuario
-            producto = pro;
+            // Obtenemos los datos del _producto obtenido por el _usuario
+            _producto = pro;
 
             // Suscribirse al evento DateSelected para los DatePickers
             FechaInicio.DateSelected += FechaInicio_DateSelected;
@@ -94,19 +94,19 @@ namespace AlkilaApp
         #region Botones
 
         /// <summary>
-        /// Guarda los datos del alquiler.
+        /// Guarda los datos del _alquiler.
         /// </summary>
         private async void GuardarDatosClicked(object sender, EventArgs e)
         {
-            await animaacionButton(sender, e);
+            await animacionButton(sender, e);
 
-            // Almacenamos los datos del alquiler
+            // Almacenamos los datos del _alquiler
             DateTime fechaActual = DateTime.Now.Date;
             DateTime fechaInicio = FechaInicio.Date;
             DateTime fechaFin = FechaFin.Date;
-            alquiler.EstadoAlquiler = Estado.Pendiente;
-            alquiler.NoMasRespuesta = true;
-            alquiler.IdAlquiler = Guid.NewGuid().ToString();
+            _alquiler.EstadoAlquiler = Estado.Pendiente;
+            _alquiler.NoMasRespuesta = true;
+            _alquiler.IdAlquiler = Guid.NewGuid().ToString();
 
             if (fechaInicio < fechaActual || fechaFin < fechaActual)
             {
@@ -129,15 +129,15 @@ namespace AlkilaApp
             }
             else
             {
-                alquiler.FechaInicio = FechaInicio.Date;
-                alquiler.FechaFin = FechaFin.Date;
+                _alquiler.FechaInicio = FechaInicio.Date;
+                _alquiler.FechaFin = FechaFin.Date;
 
-                await servicioAlquilar.InsertarOAlquilarAlquiler(alquiler);
+                await _servicioAlquilar.InsertarOAlquilarAlquiler(_alquiler);
 
                 // Volver a la página donde están los alquileres
                 await DisplayAlert("Información", "Recibirás un mensaje cuando el usuario haya visto tu propuesta", "ACEPTAR");
 
-                await Navigation.PushAsync(new VistaProductos(servicioUsuario.IdUsuario));
+                await Navigation.PushAsync(new VistaProductos(_servicioUsuario.IdUsuario));
             }
         }
 
@@ -195,50 +195,50 @@ namespace AlkilaApp
         /// </summary>
         private async void CancelarDatosClicked(object sender, EventArgs e)
         {
-            await animaacionButton(sender, e);
+            await animacionButton(sender, e);
             await Navigation.PopAsync();
         }
 
         /// <summary>
-        /// Realiza el cálculo del costo del alquiler.
+        /// Realiza el cálculo del costo del _alquiler.
         /// </summary>
         private async void BtnRealizarCalculo(object sender, EventArgs e)
         {
             btnLeerCondicion.IsEnabled = true;
 
-            // Obtener la cantidad de días de alquiler
+            // Obtener la cantidad de días de _alquiler
             int diasAlquiler = CalcularFecha();
 
-            // Calcular el costo del alquiler
+            // Calcular el costo del _alquiler
             double costoAlquiler = CalcularCostoAlquiler(diasAlquiler);
 
-            // Mostrar el costo del alquiler en la etiqueta
+            // Mostrar el costo del _alquiler en la etiqueta
             CostoAlquilerLabel.Text = $"{costoAlquiler} €";
             DiasTotalesLabel.Text = $"☀ Días totales: {diasAlquiler}";
 
             // Almacenamos el precio total
-            alquiler.PrecioTotal = costoAlquiler;
+            _alquiler.PrecioTotal = costoAlquiler;
         }
 
         /// <summary>
-        /// Calcula el costo total del alquiler según los días.
+        /// Calcula el costo total del _alquiler según los días.
         /// </summary>
-        /// <param name="diasAlquiler">Cantidad de días de alquiler.</param>
-        /// <returns>Costo total del alquiler.</returns>
+        /// <param name="diasAlquiler">Cantidad de días de _alquiler.</param>
+        /// <returns>Costo total del _alquiler.</returns>
         private double CalcularCostoAlquiler(int diasAlquiler)
         {
             // El cálculo es sobre el precio base
-            double tarifaDiaria = producto.Precio; // Tarifa diaria fija en euros
+            double tarifaDiaria = _producto.Precio; // Tarifa diaria fija en euros
             double costoTotal = 0.0;
 
             if (diasAlquiler <= 3)
             {
-                // Si el alquiler es igual o menor a 3 días, se aplica la tarifa diaria estándar
+                // Si el _alquiler es igual o menor a 3 días, se aplica la tarifa diaria estándar
                 costoTotal = diasAlquiler * tarifaDiaria;
             }
             else
             {
-                // Si el alquiler es mayor a 3 días, se aplica un descuento del 20% a partir del cuarto día
+                // Si el _alquiler es mayor a 3 días, se aplica un descuento del 20% a partir del cuarto día
                 int diasRestantesDespuesDeUnaSemana = diasAlquiler - 3;
                 double costoPrimeraSemana = 3 * tarifaDiaria;
                 double costoDespuesDeUnaSemana = diasRestantesDespuesDeUnaSemana * (tarifaDiaria * 0.8); // Aplicar descuento del 20%
@@ -256,11 +256,11 @@ namespace AlkilaApp
         /// </summary>
         private async void BtnLeerCondiciones(object sender, EventArgs e)
         {
-            bool aceptado = await DisplayAlert("Términos y Condiciones de Uso", "Bienvenido a [AlkilaApp.inc]...\n\nPor favor, lee estos términos y condiciones cuidadosamente antes de utilizar nuestra aplicación/servicio.\n\nAceptación de los Términos\n\nAl acceder o utilizar la aplicación/servicio de cualquier manera, aceptas estar sujeto a estos términos y condiciones. Si no estás de acuerdo con alguno de estos términos, no utilices la aplicación/servicio.\n\nUso del Servicio\n\nLa aplicación/servicio y su contenido son propiedad de [Nombre de la Empresa] y están protegidos por las leyes de derechos de autor correspondientes. Estás autorizado a utilizar la aplicación/servicio solo con fines personales y no comerciales.\n\nPrivacidad\n\nTu privacidad es importante para nosotros. Consulta nuestra Política de Privacidad para comprender cómo recopilamos, utilizamos y protegemos tu información personal.\n\nContenido del Usuario\n\nAl utilizar la aplicación/servicio, puedes proporcionar cierta información, como comentarios, opiniones, etc. Al hacerlo, otorgas a [ALKILA] una licencia no exclusiva, transferible, sublicenciable, libre de regalías para utilizar, reproducir, modificar, adaptar, publicar, traducir y distribuir dicho contenido en cualquier forma, medio o tecnología.\n\nResponsabilidades del Usuario\n\nEres responsable de mantener la confidencialidad de tu cuenta y contraseña, así como de restringir el acceso a tu dispositivo. Eres responsable de todas las actividades que ocurran bajo tu cuenta.\n\nModificaciones\n\nNos reservamos el derecho de modificar o revisar estos términos y condiciones en cualquier momento. Te notificaremos cualquier cambio mediante la publicación de los términos y condiciones actualizados en la aplicación/servicio. El uso continuado de la aplicación/servicio después de dichos cambios constituye tu aceptación de los términos y condiciones revisados.\n\nTerminación\n\nNos reservamos el derecho de suspender o dar por terminado tu acceso a la aplicación/servicio en cualquier momento y por cualquier motivo sin previo aviso.\n\nContacto\n\nSi tienes alguna pregunta sobre estos términos y condiciones, contáctanos en [ALK.RU@.OUI.GS].\n\nÚltima actualización: 20/04/2024", "ACEPTAR", "CANCELAR");
+            bool aceptado = await DisplayAlert("Términos y Condiciones de Uso", "Bienvenido a [AlkilaApp.inc]...\n\nPor favor, lee estos términos y condiciones cuidadosamente antes de utilizar nuestra aplicación/servicio.\n\nAceptación de los Términos\n\nAl acceder o utilizar la aplicación/servicio de cualquier manera, aceptas estar sujeto a estos términos y condiciones. Si no estás de acuerdo con alguno de estos términos, no utilices la aplicación/servicio.\n\nUso del Servicio\n\nLa aplicación/servicio y su contenido son propiedad de [AlkilaApp.inc] y están protegidos por las leyes de derechos de autor correspondientes. Estás autorizado a utilizar la aplicación/servicio solo con fines personales y no comerciales.\n\nPrivacidad\n\nTu privacidad es importante para nosotros. Consulta nuestra Política de Privacidad para comprender cómo recopilamos, utilizamos y protegemos tu información personal.\n\nContenido del Usuario\n\nAl utilizar la aplicación/servicio, puedes proporcionar cierta información, como comentarios, opiniones, etc. Al hacerlo, otorgas a [ALKILA] una licencia no exclusiva, transferible, sublicenciable, libre de regalías para utilizar, reproducir, modificar, adaptar, publicar, traducir y distribuir dicho contenido en cualquier forma, medio o tecnología.\n\nResponsabilidades del Usuario\n\nEres responsable de mantener la confidencialidad de tu cuenta y contraseña, así como de restringir el acceso a tu dispositivo. Eres responsable de todas las actividades que ocurran bajo tu cuenta.\n\nModificaciones\n\nNos reservamos el derecho de modificar o revisar estos términos y condiciones en cualquier momento. Te notificaremos cualquier cambio mediante la publicación de los términos y condiciones actualizados en la aplicación/servicio. El uso continuado de la aplicación/servicio después de dichos cambios constituye tu aceptación de los términos y condiciones revisados.\n\nTerminación\n\nNos reservamos el derecho de suspender o dar por terminado tu acceso a la aplicación/servicio en cualquier momento y por cualquier motivo sin previo aviso.\n\nContacto\n\nSi tienes alguna pregunta sobre estos términos y condiciones, contáctanos en [ALK.RU@.OUI.GS].\n\nÚltima actualización: 20/04/2024", "ACEPTAR", "CANCELAR");
 
             if (aceptado)
             {
-                // Si el usuario presionó "Aceptar", habilitar el CheckBox
+                // Si el _usuario presionó "Aceptar", habilitar el CheckBox
                 checkBox.IsEnabled = true;
             }
         }
@@ -268,7 +268,7 @@ namespace AlkilaApp
         /// <summary>
         /// Simula la animación de presionar el botón.
         /// </summary>
-        private async Task animaacionButton(object sender, EventArgs e)
+        private async Task animacionButton(object sender, EventArgs e)
         {
             ImageButton button = (ImageButton)sender;
 

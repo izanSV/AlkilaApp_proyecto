@@ -34,7 +34,7 @@ namespace AlkilaApp.Vistas
                 return;
             }
 
-            // Verificar si el usuario es empresario
+            // Verificar si el _usuario es empresario
             if (EsEmpresarioElUsuario())
             {
                 await DisplayAlert("Aceptado", "El Número de Identificación Fiscal es correcto.", "ACEPTAR");
@@ -49,9 +49,9 @@ namespace AlkilaApp.Vistas
 
 
         /// <summary>
-        /// Método estático para verificar si el usuario es un empresario basado en su NIF.
+        /// Método estático para verificar si el _usuario es un empresario basado en su NIF.
         /// </summary>
-        /// <returns>True si el usuario es empresario, de lo contrario, False.</returns>
+        /// <returns>True si el _usuario es empresario, de lo contrario, False.</returns>
         public static bool EsEmpresarioElUsuario()
         {
             // Verificar la longitud del NIF

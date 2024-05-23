@@ -11,9 +11,9 @@ namespace AlkilaApp
         #region Atributos
 
         private ServicioUbicacion _servicioUbicacion;
-        private ServicioUsuario servicioUsuario;
-        private ServicioProducto servicioProducto;
-        private Usuario infoUsuario;
+        private ServicioUsuario _servicioUsuario;
+        private ServicioProducto _servicioProducto;
+        private Usuario _infoUsuario;
         private Producto _producto;
         private EditarDatosUsuario _editarDatosUsuario;
         private AnyadirProductos _anyadirProductos;
@@ -27,20 +27,20 @@ namespace AlkilaApp
         /// <summary>
         /// Constructor de la clase DetallesProducto.
         /// </summary>
-        /// <param name="idUsuario">ID del usuario actual.</param>
+        /// <param name="idUsuario">ID del _usuario actual.</param>
         /// <param name="producto">Producto a mostrar.</param>
-        /// <param name="esProductoDelUsuario">Indica si el producto pertenece al usuario actual.</param>
+        /// <param name="esProductoDelUsuario">Indica si el _producto pertenece al _usuario actual.</param>
         public DetallesProducto(string idUsuario, Producto producto, bool esProductoDelUsuario)
         {
             InitializeComponent();
             iconoEmpresa.IsVisible = false;
 
-            servicioProducto = new ServicioProducto();
+            _servicioProducto = new ServicioProducto();
             _servicioUbicacion = new ServicioUbicacion();
-            servicioUsuario = new ServicioUsuario();
-            servicioUsuario.IdUsuario = idUsuario;
-            _editarDatosUsuario = new EditarDatosUsuario(this.Navigation, servicioUsuario.IdUsuario);
-            _anyadirProductos = new AnyadirProductos(servicioUsuario.IdUsuario);
+            _servicioUsuario = new ServicioUsuario();
+            _servicioUsuario.IdUsuario = idUsuario;
+            _editarDatosUsuario = new EditarDatosUsuario(this.Navigation, _servicioUsuario.IdUsuario);
+            _anyadirProductos = new AnyadirProductos(_servicioUsuario.IdUsuario);
             _servicioAlquiler = new ServicioAlquiler();
 
             BindingContext = producto;
@@ -56,7 +56,7 @@ namespace AlkilaApp
         #region Métodos Privados
 
         /// <summary>
-        /// Asigna los datos del producto a los elementos de la interfaz de usuario.
+        /// Asigna los datos del _producto a los elementos de la interfaz de _usuario.
         /// </summary>
         /// <param name="producto">Producto a mostrar.</param>
         private void AsignarDatosProducto(Producto producto)
@@ -71,7 +71,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Obtiene la fecha de finalización del alquiler del producto.
+        /// Obtiene la fecha de finalización del _alquiler del _producto.
         /// </summary>
         /// <param name="producto">Producto a consultar.</param>
         private async void ObtenerFechaFinalAlquiler(Producto producto)
@@ -81,16 +81,16 @@ namespace AlkilaApp
             if (alquiler != null && producto.IdProducto.Equals(alquiler.IdProducto) && producto.EstaAlquilado)
             {
                 string fechaFinAlquiler = alquiler.FechaFin.ToString("yyyy-MM-dd");
-                idDescAlquiler.Text = "Fecha de finalización del producto:";
+                idDescAlquiler.Text = "Fecha de finalización del _producto:";
                 idFechaFinAlquiler.Text = fechaFinAlquiler;
             }
         }
 
         /// <summary>
-        /// Habilita o deshabilita los botones de la interfaz según el estado del producto.
+        /// Habilita o deshabilita los botones de la interfaz según el estado del _producto.
         /// </summary>
         /// <param name="producto">Producto a evaluar.</param>
-        /// <param name="esProductoDelUsuario">Indica si el producto pertenece al usuario actual.</param>
+        /// <param name="esProductoDelUsuario">Indica si el _producto pertenece al _usuario actual.</param>
         private void HabilitarBotones(Producto producto, bool esProductoDelUsuario)
         {
             AlquilarButton.IsVisible = esProductoDelUsuario && !producto.EstaAlquilado;
@@ -99,36 +99,36 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Muestra los detalles del usuario propietario del producto.
+        /// Muestra los detalles del _usuario propietario del _producto.
         /// </summary>
-        /// <param name="idProducto">ID del producto.</param>
+        /// <param name="idProducto">ID del _producto.</param>
         public async void DetallesUsuario(string idProducto)
         {
             try
             {
-                infoUsuario = await servicioUsuario.ObtenerUsuarioPorIdProducto(idProducto);
-                UsuarioLabel.Text = infoUsuario.Nombre;
-                FotoLabel.Source = infoUsuario.Foto;
-                iconoEmpresa.IsVisible = infoUsuario.EsEmpresa;
+                _infoUsuario = await _servicioUsuario.ObtenerUsuarioPorIdProducto(idProducto);
+                UsuarioLabel.Text = _infoUsuario.Nombre;
+                FotoLabel.Source = _infoUsuario.Foto;
+                iconoEmpresa.IsVisible = _infoUsuario.EsEmpresa;
 
-                _ubicacion = await _servicioUbicacion.ObtenerLocalizacionAsync(infoUsuario.IdUsuario);
+                _ubicacion = await _servicioUbicacion.ObtenerLocalizacionAsync(_infoUsuario.IdUsuario);
 
                 DatosUbicacionUsuario.Text = _ubicacion != null
                     ? $"{_ubicacion.Calle}, {_ubicacion.Localidad}"
-                    : "El usuario no ha registrado una ubicación";
+                    : "El _usuario no ha registrado una ubicación";
             }
             catch (Exception)
             {
-                Console.WriteLine("Error al obtener el nombre del usuario.");
+                Console.WriteLine("Error al obtener el nombre del _usuario.");
             }
         }
 
         /// <summary>
-        /// Navega a la página de alquiler de productos.
+        /// Navega a la página de _alquiler de productos.
         /// </summary>
         private async void AlquilarButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AlquilarProducto(servicioUsuario.IdUsuario, infoUsuario, _producto));
+            await Navigation.PushAsync(new AlquilarProducto(_servicioUsuario.IdUsuario, _infoUsuario, _producto));
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace AlkilaApp
         }
 
         /// <summary>
-        /// Elimina el producto si no está alquilado.
+        /// Elimina el _producto si no está alquilado.
         /// </summary>
         private async void EliminarButton_Clicked(object sender, EventArgs e)
         {
@@ -238,7 +238,8 @@ namespace AlkilaApp
 
                 if (result)
                 {
-                    await servicioProducto.EliminarProductoPorId(_producto.IdProducto);
+                    await _servicioProducto.EliminarProductoPorId(_producto.IdProducto);
+
                     await DisplayAlert("Éxito", "El producto ha sido eliminado correctamente", "OK");
 
                     _editarDatosUsuario.CargarMiListaProductos();
@@ -259,6 +260,12 @@ namespace AlkilaApp
             if (_producto.EstaAlquilado)
             {
                 await DisplayAlert("Error", "No puedes editar un producto mientras esté alquilado.", "OK");
+                return;
+            }
+
+            if (_producto.Precio < 0.00)
+            {
+                await DisplayAlert("Error", "Por favor, Selecciona un precio válido.", "ACEPTAR");
                 return;
             }
 
@@ -306,8 +313,8 @@ namespace AlkilaApp
         {
             try
             {
-                string telefono = infoUsuario.NumeroTelefono;
-                bool abrirContacto = await DisplayAlert("", $"¿Deseas abrir el contacto de WhatsApp de \"{infoUsuario.Nombre}\"?", "Sí", "No");
+                string telefono = _infoUsuario.NumeroTelefono;
+                bool abrirContacto = await DisplayAlert("", $"¿Deseas abrir el contacto de WhatsApp de \"{_infoUsuario.Nombre}\"?", "Sí", "No");
 
                 if (abrirContacto)
                 {
